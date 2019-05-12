@@ -7,7 +7,9 @@ shared_state = 1
 [display]
 width = 1024
 height = 576
+fullscreen = 0
 
 [project]
 title = Codename G.O.D.
+dependencies = https://github.com/britzl/defold-timer/archive/master.zip
 

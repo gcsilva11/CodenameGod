@@ -1,14 +1,9 @@
 function init(self)
-	msg.post(".", "acquire_input_focus")
+	msg.post(".", "run_sequence_1")
 end
 
 function final(self)
 	-- Add finalization code here
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
 	-- Remove this function if not needed
 end
 
@@ -18,17 +13,35 @@ function on_message(self, message_id, message, sender)
 			name = "house_front", 
 			randall_position = vmath.vector3(300, 180, 0)
 		})
-	elseif message_id == hash("run_sequence_1") then
+	elseif message_id == hash("run_sequence_1") then		
 		local pos = vmath.vector3(0,-20,0)
 		local rot = vmath.quat_rotation_z(90)
 		go.animate("randall", "rotation.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1)
 		go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
 		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
+		timer.delay(2, false, function(self, id)
+			msg.post(".", "gameplay")
+		end)
 		--local co = coroutine.create(sequence_1())
 		--run_sequence(co)
-		msg.post(".", "done_seq_1")
-		
+	elseif message_id == hash("gameplay") then
+		print("Gameplay start")
+		math.randomseed(os.time())
+		math.random(); math.random(); math.random()
+		local item_table = {
+			{10,200},
+			{200,0},
+			{600, 500}
+		}
+		local randall_behavior = timer.delay(10, true, function(self, id)
+			local r = math.random(3)
+			print(r)
+			go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item_table[r][1], go.EASING_LINEAR, 1)
+			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_table[r][2], go.EASING_LINEAR, 1)	
+		end)
+		print("Life goes on")
 	end
+	
 end
 
 function on_input(self, action_id, action)
@@ -41,10 +54,8 @@ function on_input(self, action_id, action)
 end
 
 local function sequence_1(self)
-	coroutine.yield(2)  -- waits 1 sec
-	
+	coroutine.yield(2)  -- waits 1 sec	
 	coroutine.yield(1)  -- waits 1 sec
-	
 	return 0
 end
 
