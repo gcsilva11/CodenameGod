@@ -37,7 +37,7 @@ function on_message(self, message_id, message, sender)
 			local randall_behavior = timer.delay(1, false, function(self, id)
 				msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
 			end)
-			msg.post("gui#room_dialogue", r)
+			msg.post("gui#room_dialogue", "show_text", {number=r})
 		end)
 	end
 	

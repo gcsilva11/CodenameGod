@@ -11,5 +11,5 @@ fullscreen = 0
 
 [project]
 title = Codename G.O.D.
-dependencies = https://github.com/britzl/defold-timer/archive/master.zip,https://github.com/Insality/defold-printer/archive/master.zip
+dependencies = 
 
