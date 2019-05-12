@@ -2,11 +2,6 @@ function init(self)
 	msg.post(".", "run_sequence_1")
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("go_outside") then
 		msg.post("/collections#main", "load_screen", {
@@ -22,24 +17,28 @@ function on_message(self, message_id, message, sender)
 		timer.delay(2, false, function(self, id)
 			msg.post(".", "gameplay")
 		end)
-		--local co = coroutine.create(sequence_1())
-		--run_sequence(co)
 	elseif message_id == hash("gameplay") then
-		print("Gameplay start")
-		math.randomseed(os.time())
-		math.random(); math.random(); math.random()
 		local item_table = {
-			{10,200},
-			{200,0},
-			{600, 500}
+			{210,200},
+			{220,260},
+			{450,300},
+			{800,280},
+			{840,280},
+			{600,200},
+			{800,200}
 		}
-		local randall_behavior = timer.delay(10, true, function(self, id)
-			local r = math.random(3)
-			print(r)
+		local randall_behavior = timer.delay(3, true, function(self, id)
+			math.randomseed(os.time())
+			math.random(); math.random(); math.random()
+			local r = math.random(1,7)
+			msg.post("randall#sprite", "play_animation", {id = hash("walking")})	
 			go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item_table[r][1], go.EASING_LINEAR, 1)
-			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_table[r][2], go.EASING_LINEAR, 1)	
+			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_table[r][2], go.EASING_LINEAR, 1)
+			local randall_behavior = timer.delay(1, false, function(self, id)
+				msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
+			end)
+			msg.post("gui#room_dialogue", r)
 		end)
-		print("Life goes on")
 	end
 	
 end
@@ -48,30 +47,5 @@ function on_input(self, action_id, action)
 	--só para testar a trocar de cenário
 	if action_id == hash("a") then
 		msg.post(".", "go_outside")
-	elseif action_id == hash("s") then
-		msg.post(".", "run_sequence_1")
 	end
-end
-
-local function sequence_1(self)
-	coroutine.yield(2)  -- waits 1 sec	
-	coroutine.yield(1)  -- waits 1 sec
-	return 0
-end
-
---[[
-local function run_sequence(seq)
-	local status, wait_seconds = coroutine.resume(seq, self)
-	if status then
-		go.animate("#", "wait", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_LINEAR, wait_seconds, 0, function ()
-			run_sequence(seq)
-		end)
-	end
-end
---]]
-
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
 end

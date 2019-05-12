@@ -1,0 +1,75 @@
+function init(self)
+	local s  = gui.get_node("box")
+	gui.set_enabled(s, false)
+	local s  = gui.get_node("text")
+	gui.set_enabled(s, false)
+end
+
+function on_message(self, message_id, message, sender)
+
+	local item_strings = {
+		"I haven't spied on anyo-I MEAN - I haven't stargazed in a while.",
+		"books",
+		"bed",
+		"poster 1",
+		"poster 2",
+		"nes",
+		"tv"
+	}
+	
+	local s  = gui.get_node("box")
+	gui.set_enabled(s, true)
+	local s  = gui.get_node("text")
+	gui.set_enabled(s, true)
+
+	if message_id == hash("1") then
+		gui.set_text(s, item_strings[1])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	elseif message_id == hash("2") then
+		gui.set_text(s, item_strings[2])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	elseif message_id == hash("3") then 
+		gui.set_text(s, item_strings[3])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	elseif message_id == hash("4") then 
+		gui.set_text(s, item_strings[4])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	elseif message_id == hash("5") then 
+		gui.set_text(s, item_strings[5])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	elseif message_id == hash("6") then
+		gui.set_text(s, item_strings[6])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	else
+		gui.set_text(s, item_strings[7])
+		timer.delay(2, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	end
+end
