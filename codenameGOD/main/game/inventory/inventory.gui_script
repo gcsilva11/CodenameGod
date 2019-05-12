@@ -1,0 +1,18 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.is_open = false
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("click") and action.pressed then
+		if gui.pick_node(gui.get_node("inventory_handle"), action.x, action.y) then
+			if not self.is_open then
+				gui.animate(gui.get_node("inventory"), "position.y", 124, gui.EASING_LINEAR, 0.3)
+				self.is_open = true
+			else
+				gui.animate(gui.get_node("inventory"), "position.y", 40, gui.EASING_LINEAR, 0.3)
+				self.is_open = false
+			end
+		end
+	end
+end
