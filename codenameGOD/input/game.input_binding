@@ -1,0 +1,24 @@
+key_trigger {
+  input: KEY_Q
+  action: "q"
+}
+key_trigger {
+  input: KEY_W
+  action: "w"
+}
+key_trigger {
+  input: KEY_R
+  action: "r"
+}
+key_trigger {
+  input: KEY_E
+  action: "e"
+}
+key_trigger {
+  input: KEY_A
+  action: "a"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "click"
+}

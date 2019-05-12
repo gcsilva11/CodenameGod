@@ -1,0 +1,21 @@
+images {
+  image: "/assets/images/background/city_street2_day.png"
+}
+images {
+  image: "/assets/images/background/city_street_day.png"
+}
+images {
+  image: "/assets/images/background/city_street_night.png"
+}
+images {
+  image: "/assets/images/background/house_front_day.png"
+}
+images {
+  image: "/assets/images/background/house_front_night.png"
+}
+images {
+  image: "/assets/images/background/room.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

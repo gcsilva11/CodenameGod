@@ -1,0 +1,60 @@
+animations {
+  id: "idle"
+  images {
+    image: "/assets/images/characters/idle/idle10.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle11.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle12.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle9.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "talking"
+  images {
+    image: "/assets/images/characters/talking/talking10.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking11.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking12.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking9.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walking"
+  images {
+    image: "/assets/images/characters/walking/walking13.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking14.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking15.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking16.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

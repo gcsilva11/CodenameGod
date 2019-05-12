@@ -1,0 +1,11 @@
+function init(self)
+	self.current_factory = collectionfactory.create("#factory_menu")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("load_screen") then
+		go.delete(self.current_factory)
+		self.current_factory = collectionfactory.create("#factory_"..message.name)
+		go.set_position(message.randall_position, "/randall")
+	end
+end

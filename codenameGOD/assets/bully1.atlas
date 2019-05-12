@@ -1,0 +1,79 @@
+animations {
+  id: "idle"
+  images {
+    image: "/assets/images/characters/idle/idle5.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle6.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle7.png"
+  }
+  images {
+    image: "/assets/images/characters/idle/idle8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "talking"
+  images {
+    image: "/assets/images/characters/talking/talking5.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking6.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking7.png"
+  }
+  images {
+    image: "/assets/images/characters/talking/talking8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walking_right"
+  images {
+    image: "/assets/images/characters/walking/walking5.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking6.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking7.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walking_left"
+  images {
+    image: "/assets/images/characters/walking/walking10.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking11.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking12.png"
+  }
+  images {
+    image: "/assets/images/characters/walking/walking9.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
