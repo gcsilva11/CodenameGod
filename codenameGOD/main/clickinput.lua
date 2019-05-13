@@ -17,7 +17,7 @@ end
 --   url - URL of the game object that received input
 --   action_id - action id from on_input
 --   action - action table from on_input 
-function M.add(sprite_url, sprite_offset, on_input_callback)
+function M.add(sprite_url, sprite_offset, on_input_callback, go_id)
 	assert(sprite_url)
 	assert(on_input_callback)
 	sprite_offset = sprite_offset or vmath.vector3()
@@ -26,7 +26,9 @@ function M.add(sprite_url, sprite_offset, on_input_callback)
 		sprite_url = sprite_url,
 		go_url = msg.url(sprite_url.socket, sprite_url.path, nil),
 		offset = sprite_offset,
-		callback = on_input_callback, size = go.get(sprite_url, "size")}
+		callback = on_input_callback, size = go.get(sprite_url, "size"),
+		gameobject = go_id
+	}
 	end
 
 	--- Remove a previously added sprite
@@ -55,7 +57,7 @@ function M.add(sprite_url, sprite_offset, on_input_callback)
 			local scaled_size = vmath.vector3(size.x * go_scale.x * sprite_scale.x, size.y * go_scale.y * sprite_scale.y, 0)
 
 			if action.x >= pos.x - scaled_size.x / 2 and action.x <= pos.x + scaled_size.x / 2 and action.y >= pos.y - scaled_size.y / 2 and action.y <= pos.y + scaled_size.y / 2 then
-				return sprite_data.callback(sprite_data.go_url, action_id, action)
+				return sprite_data.callback(sprite_data.go_url, action_id, action,sprite_data.gameobject)
 			end
 		end
 		return false

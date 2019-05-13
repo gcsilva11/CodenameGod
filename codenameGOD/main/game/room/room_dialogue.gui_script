@@ -9,7 +9,11 @@ local item_strings = {
 }
 
 local int_strings = {
-	"Nearly forgot my pet rock!"
+	"Nearly forgot my pet rock!",
+	"Found coins!",
+	"That's where it was!",
+	"Ah there's one...",
+	"Found a shoe!"
 }
 
 function init(self)
@@ -39,7 +43,7 @@ function on_message(self, message_id, message, sender)
 		local s  = gui.get_node("text")
 		gui.set_enabled(s, true)
 
-		gui.set_text(s, int_strings[1])
+		gui.set_text(s, int_strings[message.number])
 		timer.delay(2, false, function(self, id)
 			gui.set_enabled(s, false)
 			local s  = gui.get_node("box")
