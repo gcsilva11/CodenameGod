@@ -8,6 +8,10 @@ local item_strings = {
 	"tv"
 }
 
+local int_strings = {
+	"Nearly forgot my pet rock!"
+}
+
 function init(self)
 	local s  = gui.get_node("box")
 	gui.set_enabled(s, false)
@@ -23,6 +27,19 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(s, true)
 
 		gui.set_text(s, item_strings[message.number])
+		timer.delay(6, false, function(self, id)
+			gui.set_enabled(s, false)
+			local s  = gui.get_node("box")
+			gui.set_enabled(s, false)
+		end)
+	end
+	if message_id == hash("show_int_text") then
+		local s  = gui.get_node("box")
+		gui.set_enabled(s, true)
+		local s  = gui.get_node("text")
+		gui.set_enabled(s, true)
+
+		gui.set_text(s, int_strings[1])
 		timer.delay(2, false, function(self, id)
 			gui.set_enabled(s, false)
 			local s  = gui.get_node("box")

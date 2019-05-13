@@ -1,0 +1,27 @@
+images {
+  image: "/assets/images/items/items1.png"
+}
+images {
+  image: "/assets/images/items/items2.png"
+}
+images {
+  image: "/assets/images/items/items3.png"
+}
+images {
+  image: "/assets/images/items/items4.png"
+}
+images {
+  image: "/assets/images/items/items5.png"
+}
+images {
+  image: "/assets/images/items/items6.png"
+}
+images {
+  image: "/assets/images/items/items7.png"
+}
+images {
+  image: "/assets/images/items/items8.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
