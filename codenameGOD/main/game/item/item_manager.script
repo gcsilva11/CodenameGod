@@ -48,7 +48,7 @@ local function handle_click(url, action_id, action, gameobject)
 				)
 			end
 						
-		elseif action.released and current_item.status ~= "useless" then
+		elseif action.released then
 			--current_item.found = 1
 			
 			msg.post(
