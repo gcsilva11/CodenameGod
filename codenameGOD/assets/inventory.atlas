@@ -1,6 +1,12 @@
 images {
   image: "/assets/images/inventory.png"
 }
+images {
+  image: "/assets/images/inventory_handle.png"
+}
+images {
+  image: "/assets/images/inventory_box.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

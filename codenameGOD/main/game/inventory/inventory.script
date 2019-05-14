@@ -1,0 +1,56 @@
+local is_open = false
+
+function inside_gameobject(sprite_url, x, y, offset)
+	local go_url = msg.url(sprite_url.socket, sprite_url.path, nil)
+	local offset = offset or vmath.vector3()
+	
+	local go_scale = go.get_scale_vector(go_url)
+	local sprite_scale = go.get(sprite_url, "scale")
+	local size = go.get(sprite_url, "size")
+	local pos = go.get_position(go_url)
+
+	pos.x = pos.x + offset.x * go_scale.x
+	pos.y = pos.y + offset.y * go_scale.y
+
+	local scaled_size = vmath.vector3(size.x * go_scale.x * sprite_scale.x, size.y * go_scale.y * sprite_scale.y, 0)
+
+	if x >= pos.x - scaled_size.x / 2 and x <= pos.x + scaled_size.x / 2 and y >= pos.y - scaled_size.y / 2 and y <= pos.y + scaled_size.y / 2 then
+		return true
+	else
+		return false
+	end
+end
+
+
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("click") and action.pressed then
+		if inside_gameobject("#inventory_handle", action.x, action.y) then
+			if not is_open then
+				go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 124, go.EASING_LINEAR, 0.3)
+				is_open = true
+				msg.post("/item_manager", "inventory_opened")
+			else
+				go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 20, go.EASING_LINEAR, 0.3)
+				is_open = false
+				msg.post("/item_manager", "inventory_closed")
+			end
+		end
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("item_released") then
+		if inside_gameobject("#inventory_area", message.x, message.y, vmath.vector3(0, -78, 0)) then
+			if is_open then
+				msg.post("/item_manager", "dropped_inside_inventory", {item_name=message.item_name})
+			end
+		else
+			msg.post("/item_manager", "dropped_outside_inventory", {item_name=message.item_name})
+		end
+	end
+end

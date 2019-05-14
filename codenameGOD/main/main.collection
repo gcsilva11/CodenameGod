@@ -19,6 +19,46 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "item_manager"
+  prototype: "/main/game/item/item_manager.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "inventory"
+  prototype: "/main/game/inventory/inventory.go"
+  position {
+    x: 512.0
+    y: 20.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "collections"
@@ -110,41 +150,6 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "inventory"
-  data: "components {\n"
-  "  id: \"inventory\"\n"
-  "  component: \"/main/game/inventory/inventory.gui\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-embedded_instances {
   id: "dialogue"
   data: "components {\n"
   "  id: \"dialogue\"\n"
@@ -200,7 +205,7 @@ embedded_instances {
   position {
     x: 0.0
     y: 0.0
-    z: 0.0
+    z: 0.1
   }
   rotation {
     x: 0.0
