@@ -1,5 +1,5 @@
 local update_time = 0
-local MOVE_AROUND_TIME = 15
+local MOVE_AROUND_TIME = 20
 local gamestate = 0
 
 local item_strings = {
@@ -42,7 +42,7 @@ function update(self, dt)
 end
 
 function init(self)
-	msg.post(".", "run_sequence_1")
+	msg.post(".", "run_sequence_0")
 end
 
 function on_input(self, action_id, action)
@@ -56,8 +56,25 @@ function on_input(self, action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("run_sequence_1") then
-		gamestate = 1	
+	if message_id == hash("run_sequence_0") then
+		msg.post("/collections#main", "stop_game")
+		msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna be late for school dude!"})
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="ITS THE WEEKEND SHUT UP", character = "/randall"})
+		end)
+		timer.delay(6, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Although...! The Magic The Gathering™ tournament!", character = "/randall"})
+		end)
+		timer.delay(8.1, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late!", character = "/randall"})
+		end)
+		timer.delay(10.2, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...And my ticket!", character = "/randall"})
+		end)
+		timer.delay(10.2, false, function(self, id)
+			msg.post(".", "run_sequence_1")
+		end)
+	elseif message_id == hash("run_sequence_1") then
 		local pos = vmath.vector3(0,-20,0)
 		local rot = vmath.quat_rotation_z(90)
 		go.animate("/randall", "rotation.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1)
@@ -67,6 +84,7 @@ function on_message(self, message_id, message, sender)
 		timer.delay(3, false, function(self, id)
 			msg.post(".", "acquire_input_focus")
 			msg.post("/collections#main", "restart_game")
+			gamestate = 1 
 		end)
 	elseif message_id == hash("idle") and gamestate == 1 then
 		math.random(); math.random(); math.random()
