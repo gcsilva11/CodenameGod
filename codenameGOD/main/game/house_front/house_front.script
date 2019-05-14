@@ -1,0 +1,13 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_input(self, action_id, action)
+	--teste para ver se objetos aparecem no sítio na mudança de cenários
+	if action_id == hash("s") then
+		msg.post("/collections#main", "load_screen", {
+			name = "room",
+			pos = vmath.vector3(422,311,0)
+		})
+	end
+end

@@ -1,5 +1,3 @@
-local goput = require "main.clickinput"
-local gamestate = 0
 local update_time = 0
 local MOVE_AROUND_TIME = 15
 
@@ -34,29 +32,6 @@ local item_strings = {
 	}
 }
 
-local int_strings = {
-	petrock = {
-		text = "Nearly forgot my pet rock!",
-		position = {x=900, y=250}
-	},
-	coins = {
-		text = "Found coins!",
-		position = {x=680, y=280}
-	},
-	ticket = {
-		text = "That's where it was!",
-		position = {x=300, y=280}
-	},
-	shoe1 = {
-		text = "Ah there's one...",
-		position = {x=300, y=180}
-	},
-	shoe2 = {
-		text = "Found a shoe!",
-		position = {x=800, y=280}
-	}
-}
-
 function update(self, dt)
 	update_time = update_time + dt
 	if update_time >= MOVE_AROUND_TIME then
@@ -65,26 +40,18 @@ function update(self, dt)
 	end
 end
 
-local function handle_click(url, action_id, action, gameobject)
-
-	if action.released then
-		local item = int_strings[gameobject]
-		
-		update_time = 0
-		msg.post("/dialogue#dialogue", "show_text", {text=item.text, delay=4, character="/randall"})
-	end
-end
-
 function init(self)
-	for name, item in pairs(int_strings) do
-		goput.add(name.."#sprite", nil, handle_click, name)
-	end
 	msg.post(".", "run_sequence_1")
 end
 
 function on_input(self, action_id, action)
-	gamestate = 0 
-	return goput.on_input(action_id, action, gameobject)
+	--teste para ver se objetos aparecem no sítio na mudança de cenários
+	if action_id == hash("m") then
+		msg.post("/collections#main", "load_screen", {
+			name = "house_front",
+			pos = vmath.vector3(422,311,0)
+		})
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -106,11 +73,8 @@ function on_message(self, message_id, message, sender)
 		})
 		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
 	end
-	
-end
 
-function final(self)
-	for name, item in pairs(int_strings) do
-		goput.remove(name.."#sprite")
+	if message_id == hash("moved") then
+		update_time = 0
 	end
 end

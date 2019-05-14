@@ -1,0 +1,2 @@
+prototype: "/main/game/item/item.go"
+load_dynamically: true

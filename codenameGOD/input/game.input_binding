@@ -22,6 +22,10 @@ key_trigger {
   input: KEY_S
   action: "s"
 }
+key_trigger {
+  input: KEY_M
+  action: "m"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "click"

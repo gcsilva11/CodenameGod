@@ -13,3 +13,6 @@ fullscreen = 0
 title = Codename G.O.D.
 dependencies = 
 
+[physics]
+debug = 0
+

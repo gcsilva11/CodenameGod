@@ -1,12 +1,82 @@
+local goput = require "main.clickinput"
+local items = require("main.game.item.items")
+local mouse_x, mouse_y
+local current_item = nil
+
 function init(self)
+	msg.post(".", "acquire_input_focus")
 	self.current_factory = collectionfactory.create("#factory_menu")
+	self.current_scenario = "menu"
+	self.item_factory = "/item_spawner#item"
 	math.randomseed(os.time())
+end
+
+function update(self, dt)
+	if current_item then
+		go.set_position(vmath.vector3(mouse_x, mouse_y, 0), current_item.go)
+		current_item.position.x = mouse_x
+		current_item.position.y = mouse_y
+	end
+end
+
+local function handle_click(url, action_id, action, gameobject)
+	if action_id == hash("click") then
+		if action.pressed then
+			current_item = items[gameobject]
+			print("pressed")
+		elseif action.released then
+			print("released")
+			msg.post(
+				"/dialogue#dialogue",
+				"show_text",
+				{text=current_item.text, delay=4, character="/randall"}
+			)
+			current_item = nil
+		end
+	end
+end
+
+function update_visible_items(self)
+	for name, item in pairs(items) do
+		if item.scenario == self.current_scenario then
+			local new_item = factory.create(
+				self.item_factory,
+				vmath.vector3(item.position.x, item.position.y, 0),
+				nil,
+				{image = hash(item.image)}
+			)
+			
+			local url = msg.url(new_item)
+			url.fragment = "sprite"
+			goput.add(url, nil, handle_click, name)
+			item.go = new_item
+		else
+			if item.go then
+				local url = msg.url(item.go)
+				url.fragment = "sprite"
+				goput.remove(url)
+				go.delete(item.go)
+				item.go = nil
+			end
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("click") then
+		mouse_x = action.x
+		mouse_y = action.y
+		msg.post(self.current_factory[hash("/main")], "moved")
+	end
+
+	return goput.on_input(action_id, action, gameobject)
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("load_screen") then
 		go.delete(self.current_factory)
 		self.current_factory = collectionfactory.create("#factory_"..message.name)
+		self.current_scenario = message.name
 		if message.pos then
 			go.set_position(message.pos, "/randall")
 		end
@@ -14,5 +84,6 @@ function on_message(self, message_id, message, sender)
 		if message.rot then
 			go.set_rotation(message.rot, "/randall")
 		end
+		update_visible_items(self)
 	end
 end
