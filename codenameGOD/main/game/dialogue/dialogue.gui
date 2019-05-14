@@ -1,4 +1,4 @@
-script: "/main/game/room/room_dialogue.gui_script"
+script: "/main/game/dialogue/dialogue.gui_script"
 fonts {
   name: "regular"
   font: "/assets/fonts/regular.font"

@@ -1,0 +1,22 @@
+function init(self)
+	local box  = gui.get_node("box")
+	gui.set_enabled(box, false)
+	local text  = gui.get_node("text")
+	gui.set_enabled(text, false)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("show_text") then
+		local box  = gui.get_node("box")
+		gui.set_enabled(box, true)
+		local text  = gui.get_node("text")
+		gui.set_enabled(text, true)
+
+		gui.set_text(text, message.text)
+		timer.delay(message.delay or 2, false, function(self, id)
+			gui.set_enabled(text, false)
+			local box  = gui.get_node("box")
+			gui.set_enabled(box, false)
+		end)
+	end
+end

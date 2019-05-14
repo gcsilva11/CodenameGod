@@ -1,5 +1,6 @@
 function init(self)
 	self.current_factory = collectionfactory.create("#factory_menu")
+	math.randomseed(os.time())
 end
 
 function on_message(self, message_id, message, sender)

@@ -1,27 +1,65 @@
 local goput = require "main.clickinput"
 local gamestate = 0
 local update_time = 0
-local item_table = {
-	{210,200},
-	{220,260},
-	{450,300},
-	{800,280},
-	{840,280},
-	{600,200},
-	{800,200}
+local MOVE_AROUND_TIME = 15
+
+local item_strings = {
+	[1] = {
+		text = "I haven't spied on anyo-I MEAN - I haven't stargazed in a while.",
+		position = {x=210, y=200}
+	},
+	[2] = {
+		text = "books",
+		position = {x=220, y=260}
+	},
+	[3] = {
+		text = "bed",
+		position = {x=450, y=300}
+	},
+	[4] = {
+		text = "poster 1",
+		position = {x=800, y=280}
+	},
+	[5] = {
+		text = "poster 2",
+		position = {x=840, y=280}
+	},
+	[6] = {
+		text = "nes",
+		position = {x=600, y=200}
+	},
+	[7] = {
+		text = "tv",
+		position = {x=800, y=200}
+	}
 }
 
-local interactable_table = {
-	{900,250},
-	{680,280},
-	{300,280},
-	{300,180},
-	{800,280}
+local int_strings = {
+	petrock = {
+		text = "Nearly forgot my pet rock!",
+		position = {x=900, y=250}
+	},
+	coins = {
+		text = "Found coins!",
+		position = {x=680, y=280}
+	},
+	ticket = {
+		text = "That's where it was!",
+		position = {x=300, y=280}
+	},
+	shoe1 = {
+		text = "Ah there's one...",
+		position = {x=300, y=180}
+	},
+	shoe2 = {
+		text = "Found a shoe!",
+		position = {x=800, y=280}
+	}
 }
 
 function update(self, dt)
-	update_time = update_time + 1
-	if update_time == 1000 then
+	update_time = update_time + dt
+	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
 		msg.post(".", "idle")
 	end
@@ -29,26 +67,14 @@ end
 
 local function handle_click(url, action_id, action, gameobject)
 
-	local it_id = 0
-
 	if action.released then
-		if gameobject == "petrock" then
-			it_id = 1
-		elseif gameobject == "coins" then
-			it_id = 2
-		elseif gameobject == "ticket" then
-			it_id = 3
-		elseif gameobject == "shoe1" then
-			it_id = 4
-		elseif gameobject == "shoe2" then
-			it_id = 5
-		end
-
+		local item = int_strings[gameobject]
+		
 		update_time = 0
-		msg.post("gui#room_dialogue", "show_int_text", {number=it_id})
-			local randall_behavior = timer.delay(3, false, function(self, id)
-			go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, interactable_table[it_id][1], go.EASING_LINEAR, 1.2)
-			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, interactable_table[it_id][2], go.EASING_LINEAR, 1.2)
+		msg.post("/dialogue#dialogue", "show_text", {text=item.text, delay=4})
+		local randall_behavior = timer.delay(3, false, function(self, id)
+			go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item.position.x, go.EASING_LINEAR, 1.2)
+			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item.position.y, go.EASING_LINEAR, 1.2)
 			local randall_behavior = timer.delay(1, false, function(self, id)
 				msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
 			end)
@@ -60,12 +86,9 @@ local function handle_click(url, action_id, action, gameobject)
 end
 
 function init(self)
-
-	goput.add("petrock#sprite", nil, handle_click, "petrock")
-	goput.add("ticket#sprite", nil, handle_click, "ticket")
-	goput.add("shoe1#sprite", nil, handle_click, "shoe1")
-	goput.add("shoe2#sprite", nil, handle_click, "shoe2")
-	goput.add("coins#sprite", nil, handle_click, "coins")
+	for name, item in pairs(int_strings) do
+		goput.add(name.."#sprite", nil, handle_click, name)
+	end
 	msg.post(".", "run_sequence_1")
 end
 
@@ -83,28 +106,23 @@ function on_message(self, message_id, message, sender)
 		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
 		timer.delay(2, false, function(self, id)
 			msg.post(".", "acquire_input_focus")
-			msg.post(".", "non_idle")
 		end)
 	elseif message_id == hash("idle") then
-		math.randomseed(os.time())
 		math.random(); math.random(); math.random()
-		local r = math.random(1,7)
+		local r = math.random(1,#item_strings)
 		msg.post("randall#sprite", "play_animation", {id = hash("walking")})	
-		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item_table[r][1], go.EASING_LINEAR, 2)
-		go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_table[r][2], go.EASING_LINEAR, 2)
+		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item_strings[r].position.x, go.EASING_LINEAR, 2)
+		go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_strings[r].position.y, go.EASING_LINEAR, 2)
 		local randall_behavior = timer.delay(1, false, function(self, id)
 			msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
 		end)
-		msg.post("gui#room_dialogue", "show_text", {number=r})
-		msg.post(".", "non_idle")
+		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
 	end
 	
 end
 
 function final(self)
-	goput.remove("petrock#sprite")
-	goput.remove("ticket#sprite")
-	goput.remove("shoe1#sprite")
-	goput.remove("shoe2#sprite")
-	goput.remove("coins#sprite")
+	for name, item in pairs(int_strings) do
+		goput.remove(name.."#sprite")
+	end
 end
