@@ -18,12 +18,38 @@ local function handle_click(url, action_id, action, gameobject)
 	if action_id == hash("click") then
 		if action.pressed then
 			current_item = items[gameobject]
-		elseif action.released then
-			msg.post(
-				"/dialogue#dialogue",
-				"show_text",
-				{text=current_item.text, delay=4, character="/randall"}
-			)
+			--if item is stub, switch to original
+			if current_item.stub_for ~= "self" then
+				--find real item
+				for i,v in pairs(items) do
+					if v.name == current_item.stub_for and current_item.stub_for ~= "self" 	then
+						current_item = items[i]
+					end
+				end
+			end
+
+			--MAKE STUBS USELESS
+			for i,v in pairs(items) do
+				if current_item.name == v.stub_for then
+					msg.post(v.go, "disable")
+				end
+			end
+
+			if current_item.status == "hide" then
+				msg.post(current_item.go, "enable")
+			end
+					
+			if current_item.found == 0 then
+				current_item.found = 1 
+					msg.post(
+					"/dialogue#dialogue",
+					"show_text",
+					{text=current_item.text, delay=4, character="/randall"}
+				)
+			end
+						
+		elseif action.released and current_item.status ~= "useless" then
+			--current_item.found = 1
 			
 			msg.post(
 				"/inventory",
@@ -46,11 +72,14 @@ function update_visible_items(self)
 					nil,
 					{image = hash(item.image)}
 				)
-
 				local url = msg.url(new_item)
 				url.fragment = "sprite"
 				goput.add(url, nil, handle_click, name)
 				item.go = new_item
+				if item.status == "hide" then
+					msg.post(item.go, "disable")
+				end
+
 			end
 		else
 			if item.go then
