@@ -85,6 +85,14 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("stop_game") then
+		msg.post(".", "release_input_focus")
+	end
+
+	if message_id == hash("restart_game") then
+		msg.post(".", "acquire_input_focus")
+	end
+	
 	if message_id == hash("changed_scenario") then
 		self.current_scenario = message.name
 		update_visible_items(self)
@@ -103,7 +111,6 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("inventory_opened") then
-		print("inventory_opened")
 		for name, item in pairs(items) do
 			if item.in_inventory then
 				go.animate(item.go, "position.y", go.PLAYBACK_ONCE_FORWARD, 40, go.EASING_LINEAR, 0.3)
@@ -112,7 +119,6 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("inventory_closed") then
-		print("inventory_closed")
 		for name, item in pairs(items) do
 			if item.in_inventory then
 				go.animate(item.go, "position.y", go.PLAYBACK_ONCE_FORWARD, -40, go.EASING_LINEAR, 0.3)
