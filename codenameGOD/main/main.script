@@ -7,5 +7,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("load_screen") then
 		go.delete(self.current_factory)
 		self.current_factory = collectionfactory.create("#factory_"..message.name)
+		if message.pos then
+			go.set_position(message.pos, "/randall")
+		end
+
+		if message.rot then
+			go.set_rotation(message.rot, "/randall")
+		end
 	end
 end

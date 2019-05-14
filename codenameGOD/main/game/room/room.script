@@ -71,17 +71,7 @@ local function handle_click(url, action_id, action, gameobject)
 		local item = int_strings[gameobject]
 		
 		update_time = 0
-		msg.post("/dialogue#dialogue", "show_text", {text=item.text, delay=4})
-		local randall_behavior = timer.delay(3, false, function(self, id)
-			go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item.position.x, go.EASING_LINEAR, 1.2)
-			go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item.position.y, go.EASING_LINEAR, 1.2)
-			local randall_behavior = timer.delay(1, false, function(self, id)
-				msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
-			end)
-			
-			go.animate(url, "position.y", go.PLAYBACK_ONCE_FORWARD, -50, go.EASING_LINEAR, 1)
-			go.animate(url, "position.x", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
-		end)
+		msg.post("/dialogue#dialogue", "show_text", {text=item.text, delay=4, character="/randall"})
 	end
 end
 
@@ -101,21 +91,19 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("run_sequence_1") then		
 		local pos = vmath.vector3(0,-20,0)
 		local rot = vmath.quat_rotation_z(90)
-		go.animate("randall", "rotation.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1)
-		go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
-		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
+		go.animate("/randall", "rotation.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1)
+		go.animate("/randall", "position.y", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
+		go.animate("/randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
 		timer.delay(2, false, function(self, id)
 			msg.post(".", "acquire_input_focus")
 		end)
 	elseif message_id == hash("idle") then
 		math.random(); math.random(); math.random()
 		local r = math.random(1,#item_strings)
-		msg.post("randall#sprite", "play_animation", {id = hash("walking")})	
-		go.animate("randall", "position.x", go.PLAYBACK_ONCE_FORWARD, item_strings[r].position.x, go.EASING_LINEAR, 2)
-		go.animate("randall", "position.y", go.PLAYBACK_ONCE_FORWARD, item_strings[r].position.y, go.EASING_LINEAR, 2)
-		local randall_behavior = timer.delay(1, false, function(self, id)
-			msg.post("randall#sprite", "play_animation", {id = hash("idle")})	
-		end)
+		msg.post("/randall", "go_to", {
+			pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
+			duration=2
+		})
 		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
 	end
 	

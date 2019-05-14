@@ -12,8 +12,20 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Remove this function if not needed
+	if message_id == hash("start_talking") then
+		self.new_animation = hash("talking")
+	end
+	if message_id == hash("stop_talking") and self.current_animation == hash("talking") then
+		self.new_animation = hash("idle")
+	end
+	if message_id == hash("go_to") then
+		self.new_animation = hash("walking")
+		go.animate("/randall", "position", go.PLAYBACK_ONCE_FORWARD, message.pos, go.EASING_LINEAR, message.duration, 0, function()
+			if self.current_animation == hash("walking") then
+				self.new_animation = hash("idle")
+			end
+		end)
+	end
 end
 
 function on_input(self, action_id, action)

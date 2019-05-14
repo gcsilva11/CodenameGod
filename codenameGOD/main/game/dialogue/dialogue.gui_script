@@ -13,10 +13,17 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(text, true)
 
 		gui.set_text(text, message.text)
+
+		if message.character then
+			msg.post(message.character, "start_talking")
+		end
 		timer.delay(message.delay or 2, false, function(self, id)
 			gui.set_enabled(text, false)
 			local box  = gui.get_node("box")
 			gui.set_enabled(box, false)
+			if message.character then
+				msg.post(message.character, "stop_talking")
+			end
 		end)
 	end
 end
