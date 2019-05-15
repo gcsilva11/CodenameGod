@@ -1,0 +1,29 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.current_animation = hash("idle")
+	self.new_animation = hash("idle")
+end
+
+function update(self, dt)
+	if self.new_animation ~= self.current_animation then
+		msg.post("#sprite", "play_animation", {id = self.new_animation})
+		self.current_animation = self.new_animation
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("start_talking") then
+		self.new_animation = hash("talking")
+	end
+	if message_id == hash("stop_talking") and self.current_animation == hash("talking") then
+		self.new_animation = hash("idle")
+	end
+	if message_id == hash("go_to") then
+		self.new_animation = hash("walking")
+		go.animate("/bully2", "position", go.PLAYBACK_ONCE_FORWARD, message.pos, go.EASING_LINEAR, message.duration, 0, function()
+			if self.current_animation == hash("walking") then
+				self.new_animation = hash("idle")
+			end
+		end)
+	end
+end

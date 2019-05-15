@@ -1,3 +1,18 @@
+components {
+  id: "bully1"
+  component: "/main/game/bully1.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
