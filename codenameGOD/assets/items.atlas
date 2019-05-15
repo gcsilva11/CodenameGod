@@ -22,6 +22,9 @@ images {
 images {
   image: "/assets/images/items/items8.png"
 }
+images {
+  image: "/assets/images/items/arrow_placehold.png"
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0

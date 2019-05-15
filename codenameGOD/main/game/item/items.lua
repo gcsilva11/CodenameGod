@@ -13,7 +13,7 @@ return {
 	},
 	coins = {
 		name = "coins",
-		text = "Coins!",
+		text = "This might come in handy!",
 		position = {x=380, y=214},
 		image = "items2",
 		scenario = "room",
