@@ -1,5 +1,5 @@
 local update_time = 0
-local MOVE_AROUND_TIME = 5
+local MOVE_AROUND_TIME = 15
 
 local item_strings = {
 	[1] = {
@@ -14,11 +14,9 @@ local item_strings = {
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	gamestate = 1 
 end
 
 function update(self,dt)
-	
 	update_time = update_time + dt
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0

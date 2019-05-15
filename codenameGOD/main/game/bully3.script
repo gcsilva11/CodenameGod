@@ -20,7 +20,7 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == hash("go_to") then
 		self.new_animation = hash("walking")
-		go.animate("/bully1", "position", go.PLAYBACK_ONCE_FORWARD, message.pos, go.EASING_LINEAR, message.duration, 0, function()
+		go.animate("bully1", "position", go.PLAYBACK_ONCE_FORWARD, message.pos, go.EASING_LINEAR, message.duration, 0, function()
 			if self.current_animation == hash("walking") then
 				self.new_animation = hash("idle")
 			end

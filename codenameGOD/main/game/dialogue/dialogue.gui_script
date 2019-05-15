@@ -14,6 +14,7 @@ function on_message(self, message_id, message, sender)
 
 		gui.set_text(text, message.text)
 
+		print(message.character)
 		if message.character then
 			msg.post(message.character, "start_talking")
 		end

@@ -1,3 +1,4 @@
+gamestate = 0
 function init(self)
 	self.current_factory = collectionfactory.create("#factory_menu")
 	math.randomseed(os.time())

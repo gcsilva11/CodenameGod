@@ -1,4 +1,3 @@
-gamestate = 0
 local update_time = 0
 local MOVE_AROUND_TIME = 15
 local shoe_count = 0
@@ -45,14 +44,6 @@ function update(self, dt)
 			msg.post(".", "idle")
 		end
 	end
-	if shoe_count == 2 and has_ticket == 0 then
-		shoe_count = 3
-		msg.post(".", "find_ticket")
-	end
-	if has_ticket == 1 and shoe_count < 2 then
-		has_ticket = 2
-		msg.post(".", "find_shoes")
-	end
 	if has_ticket >= 1 and shoe_count >= 2 then
 		timer.delay(4, false, function(self, id)
 			msg.post(".", "run_sequence_2")
@@ -61,8 +52,12 @@ function update(self, dt)
 end
 
 function init(self)
-	--msg.post("arrow", "disable")
-	msg.post(".", "run_sequence_0")
+	if gamestate == 0 then
+		msg.post("arrow", "disable")
+		msg.post(".", "run_sequence_0")
+	else
+		msg.post(".", "moved")
+	end
 end
 
 function on_input(self, action_id, action)
@@ -78,7 +73,7 @@ end
 function on_message(self, message_id, message, sender)
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
-			msg.post("/collections#main", "stop_game")
+			--[[msg.post("/collections#main", "stop_game")
 				timer.delay(3, false, function(self, id)
 					msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna\nbe late for school dude!"})
 			end)
@@ -93,8 +88,8 @@ function on_message(self, message_id, message, sender)
 			end)
 			timer.delay(18, false, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...\nAnd my ticket!", delay = 5,  character = "/randall"})
-			end)
-			timer.delay(22, false, function(self, id)
+			end)--]]
+			timer.delay(1, false, function(self, id)
 				msg.post(".", "run_sequence_1")
 			end)
 		elseif message_id == hash("run_sequence_1") then

@@ -120,6 +120,9 @@ function on_message(self, message_id, message, sender)
 		if message.item_name == "shoe1" or  message.item_name == "shoe2" then	
 			msg.post("/collection1/main#room", "shoe_found", {x = mouse_x, y = mouse_y, item_name = message.item_name})
 		end
+		if message.item_name == "petrock" then	
+			msg.post("/collection3/main#city_street_day", "pet_rock_drop", {x = mouse_x, y = mouse_y, item_name = message.item_name})
+		end
 		dropped_item.in_inventory = false
 		dropped_item.scenario = self.current_scenario
 		go.set_position(vmath.vector3(mouse_x, mouse_y, 0), dropped_item.go)
@@ -144,11 +147,6 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("destroy_item") then
 		local item = items[message.text]
 		msg.post(item.go, "disable")
-	end
-
-	if message_id == hash("check_item") then
-		local item = items[message.text]
-		return item
 	end
 
 	if message_id == hash("show_coins") then
