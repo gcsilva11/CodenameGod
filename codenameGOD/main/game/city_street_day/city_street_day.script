@@ -79,6 +79,7 @@ function on_message(self, message_id, message, sender)
 			go.animate("/bully2", "position.x", go.PLAYBACK_ONCE_FORWARD, 900, go.EASING_LINEAR, 1)
 			go.animate("/bully3", "position.x", go.PLAYBACK_ONCE_FORWARD, 900, go.EASING_LINEAR, 1)
 		end)
+		gamestate = 4
 		
 
 	elseif message_id == hash("idle") then

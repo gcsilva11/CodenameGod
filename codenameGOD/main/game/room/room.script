@@ -158,7 +158,7 @@ function on_message(self, message_id, message, sender)
 				msg.post("arrow", "enable")
 				
 			end)
-			gamestate = 2 
+			gamestate = 3
 		end
 		
 		if message_id == hash("moved") then
