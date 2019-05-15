@@ -54,6 +54,7 @@ end
 function init(self)
 	if gamestate == 0 then
 		msg.post("arrow", "disable")
+		msg.post("arrow", "release_input_focus")
 		msg.post(".", "run_sequence_0")
 	else
 		msg.post(".", "moved")
@@ -151,6 +152,7 @@ function on_message(self, message_id, message, sender)
 			timer.delay(4, false, function(self, id)
 				msg.post(".", "acquire_input_focus")
 				msg.post("arrow", "enable")
+				msg.post("arrow", "acquire_input_focus")
 				
 			end)
 			gamestate = 3
