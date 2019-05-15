@@ -5,7 +5,7 @@ instances {
   position {
     x: 611.0
     y: 155.0
-    z: 0.0
+    z: 0.2
   }
   rotation {
     x: 0.0
@@ -23,9 +23,9 @@ instances {
   id: "bully2"
   prototype: "/main/game/bully2.go"
   position {
-    x: 753.0
+    x: 777.0
     y: 205.0
-    z: 0.0
+    z: 0.1
   }
   rotation {
     x: 0.0

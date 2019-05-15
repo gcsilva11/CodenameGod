@@ -50,7 +50,7 @@ function update_visible_items(self)
 			if not item.go then
 				local new_item = factory.create(
 					self.item_factory,
-					vmath.vector3(item.position.x, item.position.y, 0.3),
+					vmath.vector3(item.position.x, item.position.y, 0),
 					nil,
 					{image = hash(item.image)}
 				)

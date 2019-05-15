@@ -35,9 +35,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.2
-    y: 0.101960786
-    z: 0.5019608
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   type: TYPE_BOX
@@ -59,7 +59,7 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 0.3
+  alpha: 0.63
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
 }
@@ -77,14 +77,14 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.5
+    y: 0.5
+    z: 0.5
     w: 1.0
   }
   size {
     x: 200.0
-    y: 100.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -99,9 +99,9 @@ nodes {
   text: ""
   font: "regular"
   id: "text"
-  xanchor: XANCHOR_LEFT
+  xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_NW
+  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
