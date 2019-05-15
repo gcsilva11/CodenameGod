@@ -159,4 +159,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("moved") then
 		update_time = 0
 	end
+
+	if message_id == hash("show_ticket") then
+		go.animate("books", "position.y", go.PLAYBACK_ONCE_FORWARD, 212, go.EASING_LINEAR, 0.4)
+		go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4)
+	end
 end

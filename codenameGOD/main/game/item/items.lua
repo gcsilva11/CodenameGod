@@ -23,10 +23,10 @@ return {
 	ticket = {
 		name = "ticket",
 		text = "Ticket",
-		position = {x=262, y=375},
+		position = {x=256, y=360},
 		image = "items3",
 		scenario = "room",
-		status = "hide",
+		status = "show",
 		found = 0
 	},
 	shoe1 = {

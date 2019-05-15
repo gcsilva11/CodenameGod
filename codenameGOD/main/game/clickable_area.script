@@ -1,6 +1,6 @@
 local inside_gameobject = require("main.inside_gameobject")
 go.property("event", hash(""))
-go.property("target", hash(""))
+go.property("target", msg.url())
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
