@@ -18,26 +18,6 @@ local function handle_click(url, action_id, action, gameobject)
 	if action_id == hash("click") then
 		if action.pressed then
 			current_item = items[gameobject]
-			--if item is stub, switch to original
-			if current_item.stub_for ~= "self" then
-				--find real item
-				for i,v in pairs(items) do
-					if v.name == current_item.stub_for and current_item.stub_for ~= "self" 	then
-						current_item = items[i]
-					end
-				end
-			end
-
-			--MAKE STUBS USELESS
-			for i,v in pairs(items) do
-				if current_item.name == v.stub_for then
-					msg.post(v.go, "disable")
-				end
-			end
-
-			if current_item.status == "hide" then
-				msg.post(current_item.go, "enable")
-			end
 					
 			if current_item.found == 0 and current_item.name ~="shoe1" and current_item.name ~="shoe2" and current_item.name ~="ticket" then
 				current_item.found = 1 
@@ -49,21 +29,23 @@ local function handle_click(url, action_id, action, gameobject)
 			end
 						
 		elseif action.released then
-			--current_item.found = 1
-			
+			if current_item then
+				go.set_position(vmath.vector3(mouse_x, mouse_y, 0), current_item.go)
+				current_item = nil
+			end
+
 			msg.post(
 				"/inventory",
 				"item_released",
 				{x=mouse_x, y=mouse_y, item_name=gameobject}
 			)
-			current_item = nil
 		end
 	end
 end
 
 function update_visible_items(self)
 	for name, item in pairs(items) do
-		if item.in_inventory or item.scenario == self.current_scenario then
+		if item.status == "show" and (item.in_inventory or item.scenario == self.current_scenario) then
 			-- No need to reinitialize an already existing object
 			if not item.go then
 				local new_item = factory.create(
@@ -76,10 +58,6 @@ function update_visible_items(self)
 				url.fragment = "sprite"
 				goput.add(url, nil, handle_click, name)
 				item.go = new_item
-				if item.status == "hide" then
-					msg.post(item.go, "disable")
-				end
-
 			end
 		else
 			if item.go then
@@ -107,7 +85,7 @@ end
 
 function update(self, dt)
 	if current_item then
-		go.set_position(vmath.vector3(mouse_x, mouse_y, 0), current_item.go)
+		go.set_position(vmath.vector3(mouse_x, mouse_y, 0.6), current_item.go)
 		current_item.position.x = mouse_x
 		current_item.position.y = mouse_y
 	end
@@ -134,6 +112,7 @@ function on_message(self, message_id, message, sender)
 		end
 		dropped_item.in_inventory = true
 		dropped_item.scenario = nil
+		go.set_position(vmath.vector3(mouse_x, mouse_y, 0.6), dropped_item.go)
 	end
 
 	if message_id == hash("dropped_outside_inventory") then
@@ -143,6 +122,7 @@ function on_message(self, message_id, message, sender)
 		end
 		dropped_item.in_inventory = false
 		dropped_item.scenario = self.current_scenario
+		go.set_position(vmath.vector3(mouse_x, mouse_y, 0), dropped_item.go)
 	end
 
 	if message_id == hash("inventory_opened") then
@@ -160,15 +140,18 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 	end
+	
 	if message_id == hash("destroy_item") then
-		print(message.text)
-		for name, item in pairs(items) do
-			print(item.name)
-			if item.name == message.text then
-				print("Disabling item")
-				msg.post(item.go, "disable")
-			end
-		end
+		local item = items[message.text]
+		msg.post(item.go, "disable")
+	end
+
+	if message_id == hash("show_coins") then
+		local item = items["coins"]
+		item.status = "show"
+		item.position.x = message.x
+		item.position.y = message.y
+		update_visible_items(self)
 	end
 end
 
