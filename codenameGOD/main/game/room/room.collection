@@ -1,7 +1,7 @@
 name: "main"
 instances {
   id: "bed_clickable"
-  prototype: "/main/game/clickable_area.go"
+  prototype: "/main/game/clickable_area/clickable_area.go"
   position {
     x: 521.0
     y: 223.0
@@ -34,7 +34,7 @@ instances {
 }
 instances {
   id: "books_clickable"
-  prototype: "/main/game/clickable_area.go"
+  prototype: "/main/game/clickable_area/clickable_area.go"
   position {
     x: 252.0
     y: 361.0

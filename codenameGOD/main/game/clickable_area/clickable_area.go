@@ -1,6 +1,6 @@
 components {
   id: "clickable_area"
-  component: "/main/game/clickable_area.script"
+  component: "/main/game/clickable_area/clickable_area.script"
   position {
     x: 0.0
     y: 0.0

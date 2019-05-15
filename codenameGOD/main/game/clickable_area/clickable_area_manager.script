@@ -1,0 +1,24 @@
+function init(self)
+	self.clickable_areas = {}
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("register_area") then
+		table.insert(self.clickable_areas, sender)
+	end
+	
+	if message_id == hash("unregister_area") then
+		for i, area in ipairs(self.clickable_areas) do
+			if area == sender then
+				table.remove(self.clickable_areas, i)
+				break
+			end
+		end	
+	end
+	
+	if message_id == hash("stop_game") or message_id == hash("restart_game") then
+		for i, area in ipairs(self.clickable_areas) do
+			msg.post(area, message_id)
+		end
+	end
+end
