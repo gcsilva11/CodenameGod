@@ -163,7 +163,7 @@ return {
 		stub_for = "ticket"
 	},
 	shoe1 = {
-		name = "",
+		name = "shoe1",
 		text = "Shoe",
 		position = {x=262, y=98},
 		image = "items4",
@@ -173,7 +173,7 @@ return {
 		stub_for = "self"
 	},
 	shoe2 = {
-		name = "",
+		name = "shoe2",
 		text = "Shoe",
 		position = {x=814, y=159},
 		image = "items5",

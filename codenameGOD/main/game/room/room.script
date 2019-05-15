@@ -1,34 +1,36 @@
 local update_time = 0
-local MOVE_AROUND_TIME = 20
+local MOVE_AROUND_TIME = 15
 local gamestate = 0
+local shoe_count = 0
+local has_ticket = 0
 
 local item_strings = {
 	[1] = {
-		text = "telescope",
+		text = "My telescope <3 Many nights spent looking at girl-I mean...at the stars. Yes.",
 		position = {x=210, y=200}
 	},
 	[2] = {
-		text = "books",
+		text = "I don't care what anyone says, the books are much better than the TV Series. Suck it Game Of Thrones.",
 		position = {x=220, y=260}
 	},
 	[3] = {
-		text = "bed",
+		text = "Oh no...Did I wet the bed again...?",
 		position = {x=450, y=300}
 	},
 	[4] = {
-		text = "poster 1",
+		text = "That sure is a nice place for a poster.",
 		position = {x=800, y=280}
 	},
 	[5] = {
-		text = "poster 2",
+		text = "Wow, I really need to fill my wall up with something.",
 		position = {x=840, y=280}
 	},
 	[6] = {
-		text = "nes",
+		text = "I love stepping on my NES controller when no one is watching!",
 		position = {x=600, y=200}
 	},
 	[7] = {
-		text = "tv",
+		text = "A weird Pepsi commercial is on screen.",
 		position = {x=800, y=200}
 	}
 }
@@ -37,7 +39,22 @@ function update(self, dt)
 	update_time = update_time + dt
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
-		msg.post(".", "idle")
+		if gamestate == 1 then
+			msg.post(".", "idle")
+		end
+	end
+	if shoe_count == 2 and has_ticket == 0 then
+		shoe_count = 3
+		msg.post(".", "find_ticket")
+	end
+	if has_ticket == 1 and shoe_count < 2 then
+		has_ticket = 2
+		msg.post(".", "find_shoes")
+	end
+	if has_ticket >= 2 and shoe_count >= 2 then
+		timer.delay(4, false, function(self, id)
+			msg.post(".", "run_sequence_2")
+		end)
 	end
 end
 
@@ -58,20 +75,23 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("run_sequence_0") then
 		msg.post("/collections#main", "stop_game")
-		msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna be late for school dude!"})
+		--[[
 		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna be late for school dude!"})
+		end)
+		timer.delay(7, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="ITS THE WEEKEND SHUT UP", character = "/randall"})
 		end)
-		timer.delay(6, false, function(self, id)
+		timer.delay(11, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Although...! The Magic The Gathering™ tournament!", character = "/randall"})
 		end)
-		timer.delay(8.1, false, function(self, id)
+		timer.delay(14, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late!", character = "/randall"})
 		end)
-		timer.delay(10.2, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...And my ticket!", character = "/randall"})
-		end)
-		timer.delay(10.2, false, function(self, id)
+		timer.delay(18, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...And my ticket!", delay = 5,  character = "/randall"})
+		end)--]]
+		timer.delay(1, false, function(self, id)
 			msg.post(".", "run_sequence_1")
 		end)
 	elseif message_id == hash("run_sequence_1") then
@@ -84,9 +104,9 @@ function on_message(self, message_id, message, sender)
 		timer.delay(3, false, function(self, id)
 			msg.post(".", "acquire_input_focus")
 			msg.post("/collections#main", "restart_game")
-			gamestate = 1 
 		end)
-	elseif message_id == hash("idle") and gamestate == 1 then
+		gamestate = 1 
+	elseif message_id == hash("idle") then
 		math.random(); math.random(); math.random()
 		local r = math.random(1,#item_strings)
 		msg.post("/randall", "go_to", {
@@ -94,6 +114,46 @@ function on_message(self, message_id, message, sender)
 			duration=2
 		})
 		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+	elseif message_id == hash("shoe_found") and shoe_count < 2 then
+		local randall_pos = go.get_position("/randall")
+		if (-200 <= randall_pos.x-message.x and randall_pos.x-message.x <= 200) and (-200 < randall_pos.y-message.y and  randall_pos.y-message.y< 200) then
+			shoe_count = shoe_count + 1
+		end
+		print(message.item_name)
+		if shoe_count == 1 then
+			msg.post("/dialogue#dialogue", "show_text", {text="ONE SHOE DOWN", character = "/randall"})
+			msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
+		end
+		if shoe_count == 2 then
+			msg.post("/dialogue#dialogue", "show_text", {text="AND THATS TWO", character = "/randall"})
+			msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
+		end
+		msg.post(".", "moved")
+		
+
+	elseif message_id == hash("find_shoes") then
+		timer.delay(4, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Ok, gotta find my shoes now...", character = "/randall"})
+		end)
+		msg.post(".", "moved")
+
+	elseif message_id == hash("find_ticket") then
+		timer.delay(4, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Now, the ticket has to be somewhere...", character = "/randall"})
+		end)
+		msg.post(".", "moved")
+		
+	elseif message_id == hash("ticket_found") and has_ticket == 0 then
+		msg.post("/dialogue#dialogue", "show_text", {text="There's the ticket!", character = "/randall"})
+		has_ticket = has_ticket + 1
+
+	elseif message_id == hash("run_sequence_2") then
+		msg.post("/collections#main", "stop_game")
+		timer.delay(6, false, function(self, id)
+			msg.post(".", "acquire_input_focus")
+			msg.post("/collections#main", "restart_game")
+		end)
+		msg.post("/dialogue#dialogue", "show_text", {text="Alriiiiiiight! Time to get out of here!", delay = 5 , character = "/randall"})
 	end
 
 	if message_id == hash("moved") then

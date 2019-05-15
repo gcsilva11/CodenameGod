@@ -1,4 +1,4 @@
-name: "main"
+name: "room_collection"
 scale_along_z: 0
 embedded_instances {
   id: "background"

@@ -39,7 +39,7 @@ local function handle_click(url, action_id, action, gameobject)
 				msg.post(current_item.go, "enable")
 			end
 					
-			if current_item.found == 0 then
+			if current_item.found == 0 and current_item.name ~="shoe1" and current_item.name ~="shoe2" and current_item.name ~="ticket" then
 				current_item.found = 1 
 					msg.post(
 					"/dialogue#dialogue",
@@ -129,12 +129,18 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("dropped_inside_inventory") then
 		local dropped_item = items[message.item_name]
+		if message.item_name == "ticket" then
+			msg.post("/collection1/main#room", "ticket_found")
+		end
 		dropped_item.in_inventory = true
 		dropped_item.scenario = nil
 	end
 
 	if message_id == hash("dropped_outside_inventory") then
 		local dropped_item = items[message.item_name]
+		if message.item_name == "shoe1" or  message.item_name == "shoe2" then	
+			msg.post("/collection1/main#room", "shoe_found", {x = mouse_x, y = mouse_y, item_name = message.item_name})
+		end
 		dropped_item.in_inventory = false
 		dropped_item.scenario = self.current_scenario
 	end
@@ -151,6 +157,16 @@ function on_message(self, message_id, message, sender)
 		for name, item in pairs(items) do
 			if item.in_inventory then
 				go.animate(item.go, "position.y", go.PLAYBACK_ONCE_FORWARD, -40, go.EASING_LINEAR, 0.3)
+			end
+		end
+	end
+	if message_id == hash("destroy_item") then
+		print(message.text)
+		for name, item in pairs(items) do
+			print(item.name)
+			if item.name == message.text then
+				print("Disabling item")
+				msg.post(item.go, "disable")
 			end
 		end
 	end
