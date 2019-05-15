@@ -8,7 +8,7 @@ local item_strings = {
 	},
 	[2] = {
 		text = "That's a bike. A useless, poorly designed bike.",
-		position = {x=450, y=300}
+		position = {x=550, y=250}
 	}
 }
 
