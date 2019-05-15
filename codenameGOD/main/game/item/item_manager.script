@@ -146,6 +146,11 @@ function on_message(self, message_id, message, sender)
 		msg.post(item.go, "disable")
 	end
 
+	if message_id == hash("check_item") then
+		local item = items[message.text]
+		return item
+	end
+
 	if message_id == hash("show_coins") then
 		local item = items["coins"]
 		item.status = "show"

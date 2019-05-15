@@ -1,0 +1,97 @@
+local update_time = 0
+local MOVE_AROUND_TIME = 5
+gamestate = 3
+
+local item_strings = {
+	[1] = {
+		text = "It's trash, like me.",
+		position = {x=800, y=200}
+	},
+	[2] = {
+		text = "That's a bike. A useless, poorly designed bike.",
+		position = {x=450, y=300}
+	}
+}
+
+function init(self)
+	if gamestate == 3  then
+		msg.post(".", "bully_sequence_0")
+
+	end
+end
+
+function update(self,dt)
+	
+	update_time = update_time + dt
+	if update_time >= MOVE_AROUND_TIME then
+		update_time = 0
+		if gamestate == 1 then
+			msg.post(".", "idle")
+		end
+		
+	end
+
+end
+
+function on_message(self, message_id, message, sender)
+
+	if  message_id == hash("bully_sequence_0") then
+		msg.post("/collections#main", "stop_game")
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Well, well, look who we have here", character = "/bully1"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Mr. Smarty Pants himself!", character = "/bully2"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Hehehehe!", character = "/bully3"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Hehehehe!", character = "/bully2"})
+		end)
+		timer.delay(3, false, function(self, id)
+			go.animate("/bully1", "position.x", go.PLAYBACK_ONCE_FORWARD, 100, go.EASING_LINEAR, 1)
+			go.animate("/bully2", "position.x", go.PLAYBACK_ONCE_FORWARD, 150, go.EASING_LINEAR, 1)
+			go.animate("/bully3", "position.x", go.PLAYBACK_ONCE_FORWARD, 110, go.EASING_LINEAR, 1)
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="What do you have there NERD!", character = "/bully3"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="G-guys c'mon stop!!", character = "/randall"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="What ticket is this? For Audrey's party?", character = "/bully3"})
+		end)
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Heh, we'll take it anyway DORK.", character = "/bully1"})
+		end)
+		msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
+		local has_coin = msg.post("/item_manager#item_manager", "check_item",{text = "money"})
+		if has_coin ~= nil then
+			timer.delay(3, false, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {text="Is that money? We'll take that too! Hehehe", character = "/bully2"})
+			end)
+		end
+		timer.delay(3, false, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="Later loser!", character = "/bully1"})
+			go.animate("/bully1", "position.x", go.PLAYBACK_ONCE_FORWARD, 900, go.EASING_LINEAR, 1)
+			go.animate("/bully2", "position.x", go.PLAYBACK_ONCE_FORWARD, 900, go.EASING_LINEAR, 1)
+			go.animate("/bully3", "position.x", go.PLAYBACK_ONCE_FORWARD, 900, go.EASING_LINEAR, 1)
+		end)
+		
+
+	elseif message_id == hash("idle") then
+		math.random(); math.random(); math.random()
+		local r = math.random(1,#item_strings)
+		msg.post("/randall", "go_to", {
+			pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
+			duration=2
+		})
+		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+	end
+	
+	if message_id == hash("moved") then
+		update_time = 0
+	end
+end
