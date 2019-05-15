@@ -73,7 +73,7 @@ end
 function on_message(self, message_id, message, sender)
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
-			--[[msg.post("/collections#main", "stop_game")
+			msg.post("/collections#main", "stop_game")
 				timer.delay(3, false, function(self, id)
 					msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna\nbe late for school dude!"})
 			end)
@@ -88,8 +88,8 @@ function on_message(self, message_id, message, sender)
 			end)
 			timer.delay(18, false, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...\nAnd my ticket!", delay = 5,  character = "/randall"})
-			end)--]]
-			timer.delay(1, false, function(self, id)
+			end)
+			timer.delay(22, false, function(self, id)
 				msg.post(".", "run_sequence_1")
 			end)
 		elseif message_id == hash("run_sequence_1") then
@@ -161,9 +161,8 @@ function on_message(self, message_id, message, sender)
 		end
 
 		if message_id == hash("show_ticket") then
-			go.animate("books", "position.y", go.PLAYBACK_ONCE_FORWARD, 212, go.EASING_LINEAR, 0.4)
+			go.animate("books", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(252,212,0.1), go.EASING_LINEAR, 0.4)
 			go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4)
-			go.set_position(vmath.vector3(252,212,0.1), "books")
 		end
 	end
 end

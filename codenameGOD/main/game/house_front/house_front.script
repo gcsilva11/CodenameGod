@@ -20,9 +20,7 @@ function update(self,dt)
 	update_time = update_time + dt
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
-		if gamestate == 1 then
 			msg.post(".", "idle")
-		end
 		
 	end
 
