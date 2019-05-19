@@ -107,8 +107,8 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("dropped_inside_inventory") then
 		local dropped_item = items[message.item_name]
-		if message.item_name == "ticket" then
-			msg.post("/collection1/main#room", "ticket_found")
+		if message.item_name == "ticket" and self.current_scenario == "room" then
+			msg.post("/collections", "send_collection", {name = "ticket_found"})
 		end
 		dropped_item.in_inventory = true
 		dropped_item.scenario = nil
@@ -117,11 +117,12 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("dropped_outside_inventory") then
 		local dropped_item = items[message.item_name]
-		if message.item_name == "shoe1" or  message.item_name == "shoe2" then	
-			msg.post("/collection1/main#room", "shoe_found", {x = mouse_x, y = mouse_y, item_name = message.item_name})
+		
+		if (message.item_name == "shoe1" or  message.item_name == "shoe2") and self.current_scenario == "room" then	
+			msg.post("/collections", "send_collection", {name = "shoe_found", params = {x = mouse_x, y = mouse_y, item_name = message.item_name}})
 		end
-		if message.item_name == "petrock" then	
-			msg.post("/collection3/main#city_street_day", "pet_rock_drop", {x = mouse_x, y = mouse_y, item_name = message.item_name})
+		if message.item_name == "petrock" and self.current_scenario == "city_street_day" then	
+			msg.post("/collections", "send_collection", {name = "pet_rock_drop", params = {x = mouse_x, y = mouse_y, item_name = message.item_name}})
 		end
 		dropped_item.in_inventory = false
 		dropped_item.scenario = self.current_scenario
