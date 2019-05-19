@@ -31,14 +31,15 @@ local function handle_click(url, action_id, action, gameobject)
 		elseif action.released then
 			if current_item then
 				go.set_position(vmath.vector3(mouse_x, mouse_y, 0), current_item.go)
+
+				msg.post(
+					"/inventory",
+					"item_released",
+					{x=mouse_x, y=mouse_y, item_name=gameobject, url=msg.url(current_item.go)}
+				)
+
 				current_item = nil
 			end
-
-			msg.post(
-				"/inventory",
-				"item_released",
-				{x=mouse_x, y=mouse_y, item_name=gameobject}
-			)
 		end
 	end
 end
@@ -112,7 +113,6 @@ function on_message(self, message_id, message, sender)
 		end
 		dropped_item.in_inventory = true
 		dropped_item.scenario = nil
-		go.set_position(vmath.vector3(mouse_x, mouse_y, 0.6), dropped_item.go)
 	end
 
 	if message_id == hash("dropped_outside_inventory") then

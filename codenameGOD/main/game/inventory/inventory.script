@@ -1,8 +1,18 @@
 local inside_gameobject = require("main.inside_gameobject")
 local is_open = false
+local items_start_pos = vmath.vector3(240,46,0.6)
+local items_space = 60
+
+function reorder_items(items)
+	for i, item in ipairs(items) do
+		local pos = items_start_pos + vmath.vector3(items_space*(i-1), 0, 0)
+		go.set_position(pos, item)
+	end
+end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.items = {}
 end
 
 function on_input(self, action_id, action)
@@ -34,9 +44,30 @@ function on_message(self, message_id, message, sender)
 		if inside_gameobject("#inventory_area", message.x, message.y, vmath.vector3(0, -78, 0)) then
 			if is_open then
 				msg.post("/item_manager", "dropped_inside_inventory", {item_name=message.item_name})
+
+				local exists = false
+				
+				for i, item in ipairs(self.items) do
+					if item == message.url then
+						exists = true
+					end
+				end
+
+				if not exists then
+					table.insert(self.items, message.url)
+				end
+				reorder_items(self.items)
 			end
 		else
 			msg.post("/item_manager", "dropped_outside_inventory", {item_name=message.item_name})
+
+			for i, item in ipairs(self.items) do
+				if item == message.url then
+					table.remove(self.items, i)
+					break
+				end
+			end
+			reorder_items(self.items)
 		end
 	end
 end
