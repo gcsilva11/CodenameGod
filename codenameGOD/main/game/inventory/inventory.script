@@ -67,7 +67,9 @@ function on_message(self, message_id, message, sender)
 					break
 				end
 			end
-			reorder_items(self.items)
+			if is_open then
+				reorder_items(self.items)
+			end
 		end
 	end
 end

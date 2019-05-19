@@ -13,7 +13,7 @@ animations {
     image: "/assets/images/characters/idle/idle8.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 4
+  fps: 6
   flip_horizontal: 0
   flip_vertical: 0
 }
@@ -32,12 +32,12 @@ animations {
     image: "/assets/images/characters/talking/talking8.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 4
+  fps: 6
   flip_horizontal: 0
   flip_vertical: 0
 }
 animations {
-  id: "walking"
+  id: "walking_right"
   images {
     image: "/assets/images/characters/walking/walking5.png"
   }
@@ -51,8 +51,8 @@ animations {
     image: "/assets/images/characters/walking/walking8.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 4
-  flip_horizontal: 0
+  fps: 6
+  flip_horizontal: 1
   flip_vertical: 0
 }
 animations {
@@ -70,8 +70,8 @@ animations {
     image: "/assets/images/characters/walking/walking9.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 4
-  flip_horizontal: 0
+  fps: 6
+  flip_horizontal: 1
   flip_vertical: 0
 }
 margin: 0

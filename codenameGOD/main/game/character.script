@@ -19,9 +19,13 @@ function on_message(self, message_id, message, sender)
 		self.new_animation = hash("idle")
 	end
 	if message_id == hash("go_to") then
-		self.new_animation = hash("walking")
+		if message.pos.x > go.get_position().x then
+			self.new_animation = hash("walking_right")
+		else
+			self.new_animation = hash("walking_left")
+		end
 		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, message.pos, go.EASING_LINEAR, message.duration, 0, function()
-			if self.current_animation == hash("walking") then
+			if self.current_animation == hash("walking_right") or self.current_animation == hash("walking_left") then
 				self.new_animation = hash("idle")
 			end
 		end)
