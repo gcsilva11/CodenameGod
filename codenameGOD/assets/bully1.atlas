@@ -37,7 +37,7 @@ animations {
   flip_vertical: 0
 }
 animations {
-  id: "walking_right"
+  id: "walking"
   images {
     image: "/assets/images/characters/walking/walking5.png"
   }

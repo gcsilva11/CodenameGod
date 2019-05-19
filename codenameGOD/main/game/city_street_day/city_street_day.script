@@ -24,35 +24,49 @@ function on_message(self, message_id, message, sender)
 	if  message_id == hash("bully_sequence_0") then
 		msg.post("/collections#main", "stop_game")
 		timer.delay(3, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Well, well, look who we have here", character = "bully1"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Well, well, look who we have here", character = msg.url("bully1")})
 		end)
 		timer.delay(7, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Mr. Smarty Pants himself!", character = "bully2"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Mr. Smarty Pants himself!", character = msg.url("bully2")})
 		end)
 		timer.delay(11, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Hehehehe!", character = "bully3"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Hehehehe!", character = msg.url("bully3")})
 		end)
 		timer.delay(16, false, function(self, id)
-			go.animate("bully1", "position.x", go.PLAYBACK_ONCE_FORWARD, 270, go.EASING_LINEAR, 1)
-			go.animate("bully2", "position.x", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
-			go.animate("bully3", "position.x", go.PLAYBACK_ONCE_FORWARD, 290, go.EASING_LINEAR, 1)
+			local bully1_pos = go.get_position(msg.url("bully1"))
+			msg.post(msg.url("bully1"), "go_to", {
+				pos=vmath.vector3(270, bully1_pos.y, bully1_pos.z), 
+				duration=1
+			})
+
+			local bully2_pos = go.get_position(msg.url("bully2"))
+			msg.post(msg.url("bully2"), "go_to", {
+				pos=vmath.vector3(300, bully2_pos.y, bully2_pos.z), 
+				duration=1
+			})
+
+			local bully3_pos = go.get_position(msg.url("bully3"))
+			msg.post(msg.url("bully3"), "go_to", {
+				pos=vmath.vector3(250, bully3_pos.y, bully3_pos.z), 
+				duration=1
+			})
 		end)
 		timer.delay(20, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="What do you have there NERD!", character = "bully3"})
+			msg.post("/dialogue#dialogue", "show_text", {text="What do you have there NERD!", character = msg.url("bully3")})
 		end)
 		timer.delay(24, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="G-guys c'mon stop!!", character = "randall"})
 		end)
 		timer.delay(28, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="What ticket is this? For Audrey's party?", character = "bully3"})
+			msg.post("/dialogue#dialogue", "show_text", {text="What ticket is this? For Audrey's party?", character = msg.url("bully3")})
 		end)
 		timer.delay(32, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Heh, we'll take it anyway DORK.", character = "bully1"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Heh, we'll take it anyway DORK.", character = msg.url("bully1")})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "coins"})
 		end)
 		timer.delay(36, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="AND the money you have on you!", character = "bully1"})
+			msg.post("/dialogue#dialogue", "show_text", {text="AND the money you have on you!", character = msg.url("bully1")})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "coins"})
 		end)
@@ -73,27 +87,44 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("bully_escape") then
 
 		msg.post("/collections#main", "stop_game")
-		msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WATS THAT???", character = "bully2"})
+		msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WATS THAT???", character = msg.url("bully2")})
 
 		timer.delay(4, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Who did that bro?", character = "bully3"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Who did that bro?", character = msg.url("bully3")})
 		end)
 		timer.delay(8, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="Dude this is scary, we should, like, leave.", character = "bully1"})
+			msg.post("/dialogue#dialogue", "show_text", {text="Dude this is scary, we should, like, leave.", character = msg.url("bully1")})
 		end)
 		timer.delay(12, false, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {text="You got lucky nerd. We'll see you around.", character = "bully1"})
-			go.animate("bully1", "position.x", go.PLAYBACK_ONCE_FORWARD, 1100, go.EASING_LINEAR, 1)
-			go.animate("bully2", "position.x", go.PLAYBACK_ONCE_FORWARD, 1100, go.EASING_LINEAR, 1)
-			go.animate("bully3", "position.x", go.PLAYBACK_ONCE_FORWARD, 1100, go.EASING_LINEAR, 1)
+			msg.post("/dialogue#dialogue", "show_text", {text="You got lucky nerd. We'll see you around.", character = msg.url("bully1")})
 		end)
+
 		timer.delay(16, false, function(self, id)
+			local bully1_pos = go.get_position(msg.url("bully1"))
+			msg.post(msg.url("bully1"), "go_to", {
+				pos=vmath.vector3(1100, bully1_pos.y, bully1_pos.z), 
+				duration=2.5
+			})
+
+			local bully2_pos = go.get_position(msg.url("bully2"))
+			msg.post(msg.url("bully2"), "go_to", {
+				pos=vmath.vector3(1100, bully2_pos.y, bully2_pos.z), 
+				duration=2.5
+			})
+
+			local bully3_pos = go.get_position(msg.url("bully3"))
+			msg.post(msg.url("bully3"), "go_to", {
+				pos=vmath.vector3(1100, bully3_pos.y, bully3_pos.z), 
+				duration=2.5
+			})
+		end)
+		timer.delay(19, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="What the hell --?", character = "randall"})
 		end)
-		timer.delay(20, false, function(self, id)
+		timer.delay(23, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Is someone here with me?", character = "randall"})
 		end)
-		timer.delay(24, false, function(self, id)
+		timer.delay(27, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="FIND OUT ON THE NEXT EPISODE OF CODENAME G.O.D! ", character = "randall"})
 		end)
 		

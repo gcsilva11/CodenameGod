@@ -1,6 +1,6 @@
 components {
   id: "bully1"
-  component: "/main/game/bully1.script"
+  component: "/main/game/character.script"
   position {
     x: 0.0
     y: 0.0
