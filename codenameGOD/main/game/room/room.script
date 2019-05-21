@@ -2,8 +2,7 @@ local update_time = 0
 local MOVE_AROUND_TIME = 15
 local shoe_count = 0
 local has_ticket = 0
-
-
+local inside_gameobject = require "main.inside_gameobject"
 
 local item_strings = {
 	[1] = {
@@ -115,19 +114,17 @@ function on_message(self, message_id, message, sender)
 			msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
 		elseif message_id == hash("shoe_found") and shoe_count < 2 then
 			local randall_pos = go.get_position("/randall")
-			if (-200 <= randall_pos.x-message.x and randall_pos.x-message.x <= 200) and (-200 < randall_pos.y-message.y and  randall_pos.y-message.y< 200) then
+			if shoe_count < 2 and inside_gameobject(msg.url("/randall#sprite"), message.x, message.y) then
 				shoe_count = shoe_count + 1
-			end
-			if shoe_count == 1 then
-				msg.post("/dialogue#dialogue", "show_text", {text="ONE SHOE DOWN", character = "/randall"})
 				msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
-			end
-			if shoe_count == 2 then
-				msg.post("/dialogue#dialogue", "show_text", {text="AND THATS TWO", character = "/randall"})
-				msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
+				if shoe_count == 1 then
+					msg.post("/dialogue#dialogue", "show_text", {text="ONE SHOE DOWN", character = "/randall"})
+				end
+				if shoe_count == 2 then
+					msg.post("/dialogue#dialogue", "show_text", {text="AND THATS TWO", character = "/randall"})
+				end
 			end
 			msg.post(".", "moved")
-			
 
 		elseif message_id == hash("find_shoes") then
 			timer.delay(4, false, function(self, id)

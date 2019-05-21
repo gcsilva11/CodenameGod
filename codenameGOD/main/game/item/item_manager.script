@@ -147,7 +147,22 @@ function on_message(self, message_id, message, sender)
 	
 	if message_id == hash("destroy_item") then
 		local item = items[message.text]
-		msg.post(item.go, "disable")
+		if item.go then
+			if current_item == item then
+				current_item = nil
+			end
+
+			local item_url = msg.url(item.go)
+			go.delete(item.go)
+			item.status = "hide"
+			item.scenario = "none"
+			update_visible_items(self)
+
+			if item.in_inventory then
+				item.in_inventory = false
+				msg.post("/inventory", "remove_item", {url=item_url})
+			end
+		end
 	end
 
 	if message_id == hash("show_coins") then

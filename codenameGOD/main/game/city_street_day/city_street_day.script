@@ -1,3 +1,4 @@
+local inside_gameobject = require "main.inside_gameobject"
 local update_time = 0
 local MOVE_AROUND_TIME = 20
 
@@ -63,11 +64,9 @@ function on_message(self, message_id, message, sender)
 		timer.delay(32, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Heh, we'll take it anyway DORK.", character = msg.url("bully1")})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
-			msg.post("/item_manager#item_manager", "destroy_item",{text = "coins"})
 		end)
 		timer.delay(36, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="AND the money you have on you!", character = msg.url("bully1")})
-			msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "coins"})
 		end)
 		timer.delay(40, false, function(self, id)
@@ -79,15 +78,17 @@ function on_message(self, message_id, message, sender)
 		
 
 	elseif message_id == hash("pet_rock_drop") then
-		local bully_pos = go.get_position("bully2")
-		if (-200 <= bully_pos.x-message.x and bully_pos.x-message.x <= 200) and (-200 < bully_pos.y-message.y and  bully_pos.y-message.y< 200) then	
+		local hit_bully1 = inside_gameobject(msg.url("bully1#sprite"), message.x, message.y)
+		local hit_bully2 = inside_gameobject(msg.url("bully2#sprite"), message.x, message.y)
+		local hit_bully3 = inside_gameobject(msg.url("bully3#sprite"), message.x, message.y)
+	
+		if hit_bully1 or hit_bully2 or hit_bully3 then
 			msg.post(".", "bully_escape")
 		end
-
 	elseif message_id == hash("bully_escape") then
 
 		msg.post("/collections#main", "stop_game")
-		msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WATS THAT???", character = msg.url("bully2")})
+		msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WAS THAT???", character = msg.url("bully2")})
 
 		timer.delay(4, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Who did that bro?", character = msg.url("bully3")})

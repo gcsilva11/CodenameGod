@@ -10,6 +10,15 @@ function reorder_items(items)
 	end
 end
 
+function remove_item(items, item_url)
+	for i, item in ipairs(items) do
+		if item == item_url then
+			table.remove(items, i)
+			break
+		end
+	end
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.items = {}
@@ -60,16 +69,17 @@ function on_message(self, message_id, message, sender)
 			end
 		else
 			msg.post("/item_manager", "dropped_outside_inventory", {item_name=message.item_name})
-
-			for i, item in ipairs(self.items) do
-				if item == message.url then
-					table.remove(self.items, i)
-					break
-				end
-			end
+			remove_item(self.items, message.url)
 			if is_open then
 				reorder_items(self.items)
 			end
+		end
+	end
+
+	if message_id == hash("remove_item") then
+		remove_item(self.items, message.url)
+		if is_open then
+			reorder_items(self.items)
 		end
 	end
 end
