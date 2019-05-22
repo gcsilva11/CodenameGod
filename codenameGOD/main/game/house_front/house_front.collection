@@ -131,6 +131,44 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "sky_clickable"
+  prototype: "/main/game/clickable_area/clickable_area.go"
+  position {
+    x: 911.0
+    y: 459.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "clickable_area"
+    properties {
+      id: "event"
+      value: "click_sky"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "target"
+      value: "main"
+      type: PROPERTY_TYPE_URL
+    }
+    properties {
+      id: "use_once"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+  }
+  scale3 {
+    x: 2.294
+    y: 1.993
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "background"

@@ -40,8 +40,12 @@ function update(self, dt)
 	update_time = update_time + dt
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
-		if gamestate == 1 then
+		hint_count = hint_count + 1 
+		if gamestate < 3 and hint_count < 2 then
 			msg.post(".", "idle")
+		else
+			msg.post(".", "hint")
+			hint_count = 0
 		end
 	end
 	if not solved_puzzle and (has_ticket >= 1 and shoe_count >= 2) then
@@ -133,16 +137,27 @@ function on_message(self, message_id, message, sender)
 				duration=2
 			})
 			msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+			
+		elseif message_id == hash("hint") then
+			
+			if has_ticket >= 1 then
+				msg.post("/dialogue#dialogue", "show_text", {text = "Boy, I sure wish my shoes \nmagically flew towards me!"})
+				
+			else
+				msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it."})
+			end
+			msg.post(".", "moved")
+				
 		elseif message_id == hash("shoe_found") and shoe_count < 2 then
 			local randall_pos = go.get_position("/randall")
 			if shoe_count < 2 and inside_gameobject(msg.url("/randall#sprite"), message.x, message.y) then
 				shoe_count = shoe_count + 1
 				msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
 				if shoe_count == 1 then
-					msg.post("/dialogue#dialogue", "show_text", {text="ONE SHOE DOWN", character = "/randall"})
+					msg.post("/dialogue#dialogue", "show_text", {text="That's one shoe!", character = "/randall"})
 				end
 				if shoe_count == 2 then
-					msg.post("/dialogue#dialogue", "show_text", {text="AND THATS TWO", character = "/randall"})
+					msg.post("/dialogue#dialogue", "show_text", {text="Aaaand ready to go!", character = "/randall"})
 				end
 			end
 			msg.post(".", "moved")

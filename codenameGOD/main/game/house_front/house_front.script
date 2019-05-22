@@ -46,10 +46,14 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("click_bike") then
-		msg.post("/dialogue#dialogue", "show_text", {text="A useless bike"})
+		msg.post("/dialogue#dialogue", "show_text", {text="A useless bike. Who designed this?"})
+	end
+
+	if message_id == hash("click_sky") then
+		msg.post("/dialogue#dialogue", "show_text", {text="Beautiful sky today."})
 	end
 
 	if message_id == hash("click_trash") then
-		msg.post("/dialogue#dialogue", "show_text", {text="Trash cans"})
+		msg.post("/dialogue#dialogue", "show_text", {text="Trash cans."})
 	end
 end
