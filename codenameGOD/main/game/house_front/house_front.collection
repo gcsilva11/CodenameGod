@@ -55,6 +55,82 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "bike_clickable"
+  prototype: "/main/game/clickable_area/clickable_area.go"
+  position {
+    x: 699.0
+    y: 184.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "clickable_area"
+    properties {
+      id: "event"
+      value: "click_bike"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "target"
+      value: "main"
+      type: PROPERTY_TYPE_URL
+    }
+    properties {
+      id: "use_once"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+  }
+  scale3 {
+    x: 1.4
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "trash_clickable"
+  prototype: "/main/game/clickable_area/clickable_area.go"
+  position {
+    x: 911.0
+    y: 169.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "clickable_area"
+    properties {
+      id: "event"
+      value: "click_trash"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "target"
+      value: "main"
+      type: PROPERTY_TYPE_URL
+    }
+    properties {
+      id: "use_once"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+  }
+  scale3 {
+    x: 1.5
+    y: 1.1
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "background"

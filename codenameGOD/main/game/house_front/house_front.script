@@ -39,4 +39,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("moved") then
 		update_time = 0
 	end
+
+	if message_id == hash("click_bike") then
+		msg.post("/dialogue#dialogue", "show_text", {text="A useless bike"})
+	end
+
+	if message_id == hash("click_trash") then
+		msg.post("/dialogue#dialogue", "show_text", {text="Trash cans"})
+	end
 end

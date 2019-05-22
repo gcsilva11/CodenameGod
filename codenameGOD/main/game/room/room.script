@@ -163,5 +163,17 @@ function on_message(self, message_id, message, sender)
 			go.animate("books", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(252,212,0.1), go.EASING_LINEAR, 0.4)
 			go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4)
 		end
+
+		if message_id == hash("click_tv") then
+			msg.post("/dialogue#dialogue", "show_text", {text="An old CRT TV"})
+		end
+
+		if message_id == hash("click_nes") then
+			msg.post("/dialogue#dialogue", "show_text", {text="A classical NES"})
+		end
+
+		if message_id == hash("click_telescope") then
+			msg.post("/dialogue#dialogue", "show_text", {text="This is a telescope"})
+		end
 	end
 end
