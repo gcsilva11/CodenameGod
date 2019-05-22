@@ -1,6 +1,6 @@
 local inside_gameobject = require("main.inside_gameobject")
 local is_open = false
-local items_start_pos = vmath.vector3(240,46,0.6)
+local items_start_pos = vmath.vector3(310,46,0.6)
 local items_space = 60
 
 function reorder_items(items)
@@ -19,6 +19,17 @@ function remove_item(items, item_url)
 	end
 end
 
+function toggle_inventory()
+	is_open = not is_open
+	if is_open then
+		msg.post("/item_manager", "inventory_opened")
+		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 124, go.EASING_LINEAR, 0.3)
+	else
+		msg.post("/item_manager", "inventory_closed")
+		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 20, go.EASING_LINEAR, 0.3)
+	end
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.items = {}
@@ -26,16 +37,9 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("click") and action.pressed then
-		if inside_gameobject("#inventory_handle", action.x, action.y) then
-			if not is_open then
-				go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 124, go.EASING_LINEAR, 0.3)
-				is_open = true
-				msg.post("/item_manager", "inventory_opened")
-			else
-				go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, 20, go.EASING_LINEAR, 0.3)
-				is_open = false
-				msg.post("/item_manager", "inventory_closed")
-			end
+		local offset = vmath.vector3(-140, -9, 0)
+		if inside_gameobject("#inventory_handle", action.x, action.y, offset) then
+			toggle_inventory()
 		end
 	end
 end
@@ -80,6 +84,14 @@ function on_message(self, message_id, message, sender)
 		remove_item(self.items, message.url)
 		if is_open then
 			reorder_items(self.items)
+		end
+	end
+
+	if message_id == hash("item_drag") then
+		if not is_open then
+			if message.y <= 20 then
+				toggle_inventory()
+			end
 		end
 	end
 end

@@ -14,6 +14,11 @@ local item_strings = {
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	msg.post("sound#ambiance", "play_sound")
+end
+
+function final(self)
+	msg.post("sound#ambiance", "stop_sound")
 end
 
 function update(self,dt)

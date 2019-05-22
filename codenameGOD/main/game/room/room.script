@@ -2,6 +2,7 @@ local update_time = 0
 local MOVE_AROUND_TIME = 15
 local shoe_count = 0
 local has_ticket = 0
+local solved_puzzle = false
 local inside_gameobject = require "main.inside_gameobject"
 
 local item_strings = {
@@ -43,8 +44,10 @@ function update(self, dt)
 			msg.post(".", "idle")
 		end
 	end
-	if has_ticket >= 1 and shoe_count >= 2 then
-		timer.delay(4, false, function(self, id)
+	if not solved_puzzle and (has_ticket >= 1 and shoe_count >= 2) then
+		solved_puzzle = true
+		msg.post("/sound#2-puzzle_solve", "play_sound")
+		timer.delay(2, false, function(self, id)
 			msg.post(".", "run_sequence_2")
 		end)
 	end
@@ -58,8 +61,14 @@ function init(self)
 	else
 		msg.post(".", "moved")
 	end
+
+	msg.post("sound#ambiance", "play_sound")
 end
 
+function final(self)
+	msg.post("sound#ambiance", "stop_sound")
+end
+	
 function on_input(self, action_id, action)
 	--teste para ver se objetos aparecem no sítio na mudança de cenários
 	if action_id == hash("m") then
@@ -71,6 +80,18 @@ function on_input(self, action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("click_tv") then
+		msg.post("/dialogue#dialogue", "show_text", {text="An old CRT TV"})
+	end
+
+	if message_id == hash("click_nes") then
+		msg.post("/dialogue#dialogue", "show_text", {text="A classical NES"})
+	end
+
+	if message_id == hash("click_telescope") then
+		msg.post("/dialogue#dialogue", "show_text", {text="This is a telescope"})
+	end
+	
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
@@ -150,7 +171,6 @@ function on_message(self, message_id, message, sender)
 				msg.post(".", "acquire_input_focus")
 				msg.post("arrow", "enable")
 				msg.post("arrow", "acquire_input_focus")
-				
 			end)
 			gamestate = 3
 		end
@@ -161,19 +181,9 @@ function on_message(self, message_id, message, sender)
 
 		if message_id == hash("show_ticket") then
 			go.animate("books", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(252,212,0.1), go.EASING_LINEAR, 0.4)
-			go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4)
-		end
-
-		if message_id == hash("click_tv") then
-			msg.post("/dialogue#dialogue", "show_text", {text="An old CRT TV"})
-		end
-
-		if message_id == hash("click_nes") then
-			msg.post("/dialogue#dialogue", "show_text", {text="A classical NES"})
-		end
-
-		if message_id == hash("click_telescope") then
-			msg.post("/dialogue#dialogue", "show_text", {text="This is a telescope"})
+			go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4, 0, function(self, url, property)
+				msg.post("sound#7-books_falling", "play_sound")
+			end)
 		end
 	end
 end

@@ -1,10 +1,10 @@
 name: "main"
 instances {
-  id: "bed_clickable"
+  id: "drawer_clickable"
   prototype: "/main/game/clickable_area/clickable_area.go"
   position {
-    x: 521.0
-    y: 223.0
+    x: 784.0
+    y: 241.0
     z: 0.0
   }
   rotation {
@@ -27,8 +27,8 @@ instances {
     }
   }
   scale3 {
-    x: 3.8
-    y: 0.7
+    x: 1.0
+    y: 0.3
     z: 1.0
   }
 }
@@ -310,6 +310,76 @@ embedded_instances {
     x: 252.0
     y: 362.0
     z: 0.8
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "sound"
+  data: "components {\n"
+  "  id: \"7-books_falling\"\n"
+  "  component: \"/assets/sounds/7-books_falling.wav\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"8-door_knob\"\n"
+  "  component: \"/assets/sounds/8-door_knob.wav\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"ambiance\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/assets/sounds/3-Room Ambience.wav\\\"\\n"
+  "looping: 1\\n"
+  "group: \\\"master\\\"\\n"
+  "gain: 1.0\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
   }
   rotation {
     x: 0.0

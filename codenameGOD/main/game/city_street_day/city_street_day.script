@@ -8,6 +8,11 @@ function init(self)
 	if gamestate == 3  then
 		msg.post(".", "bully_sequence_0")
 	end
+	msg.post("sound#ambiance", "play_sound")
+end
+
+function final(self)
+	msg.post("sound#ambiance", "stop_sound")
 end
 
 function update(self,dt)
@@ -51,6 +56,10 @@ function on_message(self, message_id, message, sender)
 				pos=vmath.vector3(250, bully3_pos.y, bully3_pos.z), 
 				duration=1
 			})
+			
+			timer.delay(1, false, function(self, id)
+				msg.post("sound#9-push", "play_sound")
+			end)
 		end)
 		timer.delay(20, false, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="What do you have there NERD!", character = msg.url("bully3")})
@@ -83,8 +92,12 @@ function on_message(self, message_id, message, sender)
 		local hit_bully3 = inside_gameobject(msg.url("bully3#sprite"), message.x, message.y)
 	
 		if hit_bully1 or hit_bully2 or hit_bully3 then
+			msg.post("sound#10-hit", "play_sound")
 			msg.post(".", "bully_escape")
 		end
+	elseif message_id == hash("trash_hit") then
+		msg.post("sound#11-metal_hit", "play_sound")
+		msg.post(".", "bully_escape")
 	elseif message_id == hash("bully_escape") then
 
 		msg.post("/collections#main", "stop_game")

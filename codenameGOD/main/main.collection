@@ -155,7 +155,7 @@ embedded_instances {
   "  id: \"factory_city_street_day\"\n"
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/main/game/city_street_day/city_street_day.collection\\\"\\n"
-  "load_dynamically: false\\n"
+  "load_dynamically: true\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -244,6 +244,71 @@ embedded_instances {
     x: 0.0
     y: 0.0
     z: 0.1
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "sound"
+  data: "components {\n"
+  "  id: \"1-mouse_click\"\n"
+  "  component: \"/assets/sounds/1-mouse_click.wav\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"2-puzzle_solve\"\n"
+  "  component: \"/assets/sounds/2-puzzle_solve.wav\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"6-drawer_opening\"\n"
+  "  component: \"/assets/sounds/6-drawer_opening.wav\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
   }
   rotation {
     x: 0.0
