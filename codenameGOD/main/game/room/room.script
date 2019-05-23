@@ -4,6 +4,8 @@ local shoe_count = 0
 local has_ticket = 0
 local solved_puzzle = false
 local inside_gameobject = require "main.inside_gameobject"
+local room_url
+local arrow_url
 
 local item_strings = {
 	[1] = {
@@ -51,8 +53,8 @@ function update(self, dt)
 	if not solved_puzzle and (has_ticket >= 1 and shoe_count >= 2) then
 		solved_puzzle = true
 		msg.post("/sound#2-puzzle_solve", "play_sound")
-		timer.delay(2, false, function(self, id)
-			msg.post(".", "run_sequence_2")
+		event_manager:register_event(2, function(self, id)
+			msg.post(room_url, "run_sequence_2")
 		end)
 	end
 end
@@ -67,6 +69,8 @@ function init(self)
 	end
 
 	msg.post("sound#ambiance", "play_sound")
+	room_url = msg.url()
+	arrow_url = msg.url("arrow")
 end
 
 function final(self)
@@ -99,23 +103,28 @@ function on_message(self, message_id, message, sender)
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
-				timer.delay(3, false, function(self, id)
-					msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna\nbe late for school dude!"})
+			event_manager:register_event(3, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna\nbe late for school dude!"})
 			end)
-			timer.delay(7, false, function(self, id)
+
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="ITS THE WEEKEND SHUT UP", character = "/randall"})
 			end)
-			timer.delay(11, false, function(self, id)
+
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Although...!\nThe Magic The Gathering tournament!", character = "/randall"})
 			end)
-			timer.delay(14, false, function(self, id)
+
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late!", character = "/randall"})
 			end)
-			timer.delay(18, false, function(self, id)
+
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...\nAnd my ticket!", delay = 5,  character = "/randall"})
 			end)
-			timer.delay(22, false, function(self, id)
-				msg.post(".", "run_sequence_1")
+
+			event_manager:register_event(4, function(self, id)
+				msg.post(room_url, "run_sequence_1")
 			end)
 		elseif message_id == hash("run_sequence_1") then
 			local pos = vmath.vector3(0,-20,0)
@@ -124,8 +133,8 @@ function on_message(self, message_id, message, sender)
 			go.animate("/randall", "position.y", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
 			go.animate("/randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
 			msg.post("/collections#main", "stop_game")
-			timer.delay(3, false, function(self, id)
-				msg.post(".", "acquire_input_focus")
+			event_manager:register_event(3, function(self, id)
+				msg.post(room_url, "acquire_input_focus")
 				msg.post("/collections#main", "restart_game")
 			end)
 			gamestate = 1 
@@ -163,13 +172,13 @@ function on_message(self, message_id, message, sender)
 			msg.post(".", "moved")
 
 		elseif message_id == hash("find_shoes") then
-			timer.delay(4, false, function(self, id)
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Ok, gotta find my shoes now...", character = "/randall"})
 			end)
 			msg.post(".", "moved")
 
 		elseif message_id == hash("find_ticket") then
-			timer.delay(4, false, function(self, id)
+			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Now, the ticket has to be somewhere...", character = "/randall"})
 			end)
 			msg.post(".", "moved")
@@ -179,13 +188,13 @@ function on_message(self, message_id, message, sender)
 			has_ticket = has_ticket + 1
 
 		elseif message_id == hash("run_sequence_2") then
-			timer.delay(1, false, function(self, id)
+			event_manager:register_event(1, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Alriiiiiiight! Time to get out of here!",delay = 2, character = "/randall"})
 			end)
-			timer.delay(4, false, function(self, id)
-				msg.post(".", "acquire_input_focus")
-				msg.post("arrow", "enable")
-				msg.post("arrow", "acquire_input_focus")
+			event_manager:register_event(4, function(self, id)
+				msg.post(room_url, "acquire_input_focus")
+				msg.post(arrow_url, "enable")
+				msg.post(arrow_url, "acquire_input_focus")
 			end)
 			gamestate = 3
 		end

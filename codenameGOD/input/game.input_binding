@@ -26,6 +26,10 @@ key_trigger {
   input: KEY_M
   action: "m"
 }
+key_trigger {
+  input: KEY_SPACE
+  action: "skip"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "click"
