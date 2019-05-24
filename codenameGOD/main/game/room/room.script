@@ -1,5 +1,5 @@
 local update_time = 0
-local MOVE_AROUND_TIME = 15
+local MOVE_AROUND_TIME = 5
 local shoe_count = 0
 local has_ticket = 0
 local solved_puzzle = false
@@ -40,10 +40,11 @@ local item_strings = {
 
 function update(self, dt)
 	update_time = update_time + dt
+
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
 		hint_count = hint_count + 1 
-		if gamestate < 3 and hint_count < 2 then
+		if hint_count < 2 then
 			msg.post(".", "idle")
 		else
 			msg.post(".", "hint")
@@ -139,21 +140,27 @@ function on_message(self, message_id, message, sender)
 			end)
 			gamestate = 1 
 		elseif message_id == hash("idle") then
-			math.random(); math.random(); math.random()
-			local r = math.random(1,#item_strings)
-			msg.post("/randall", "go_to", {
-				pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
-				duration=2
-			})
-			msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+			if gamestate == 1 or gamestate == 3 then
+				math.random(); math.random(); math.random()
+				local r = math.random(1,#item_strings)
+				msg.post("/randall", "go_to", {
+					pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
+					duration=2
+				})
+				msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+			end
 			
 		elseif message_id == hash("hint") then
-			
-			if has_ticket >= 1 then
-				msg.post("/dialogue#dialogue", "show_text", {text = "Boy, I sure wish my shoes \nmagically flew towards me!"})
-				
-			else
-				msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it."})
+			print("hint time")
+			if gamestate < 3 then
+				if has_ticket >= 1 then
+					msg.post("/dialogue#dialogue", "show_text", {text = "Boy, I sure wish my shoes \nmagically flew towards me!"})		
+				else
+					msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it."})
+				end
+			end
+			if gamestate == 3 then
+				msg.post("/dialogue#dialogue", "show_text", {text = "I really need to go now\n I'm gonna be late!"})
 			end
 			msg.post(".", "moved")
 				

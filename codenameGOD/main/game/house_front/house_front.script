@@ -23,10 +23,16 @@ end
 
 function update(self,dt)
 	update_time = update_time + dt
+	
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
+		hint_count = hint_count + 1 
+		if hint_count < 2 then
 			msg.post(".", "idle")
-		
+		else
+			msg.post(".", "hint")
+			hint_count = 0
+		end
 	end
 
 end
@@ -41,6 +47,14 @@ function on_message(self, message_id, message, sender)
 		})
 		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
 	end
+
+	if message_id == hash("hint") then
+		if gamestate == 3 then
+			msg.post("/dialogue#dialogue", "show_text", {text = "I REALLY need to get going\nor I'm gonna be late!"})			
+		end
+		msg.post(".", "moved")
+	end
+	
 	if message_id == hash("moved") then
 		update_time = 0
 	end
