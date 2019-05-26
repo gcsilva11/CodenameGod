@@ -9,7 +9,8 @@ return {
 		image = "items1",
 		scenario = "room",
 		status = "show",
-		found = 0
+		found = 0,
+		label = "Pet rock"
 	},
 	coins = {
 		name = "coins",
@@ -18,7 +19,8 @@ return {
 		image = "items2",
 		scenario = "room",
 		status = "hide",
-		found = 0
+		found = 0,
+		label = "Coins"
 	},
 	ticket = {
 		name = "ticket",
@@ -27,7 +29,8 @@ return {
 		image = "items3",
 		scenario = "room",
 		status = "show",
-		found = 0
+		found = 0,
+		label = "Ticket"
 	},
 	shoe1 = {
 		name = "shoe1",
@@ -36,7 +39,8 @@ return {
 		image = "items4",
 		scenario = "room",
 		status = "show",
-		found = 0
+		found = 0,
+		label = "Left shoe"
 	},
 	shoe2 = {
 		name = "shoe2",
@@ -45,7 +49,8 @@ return {
 		image = "items5",
 		scenario = "room",
 		status = "show",
-		found = 0
+		found = 0,
+		label = "Left shoe"
 	}
 	-- END OF ROOM ITEMS
 }

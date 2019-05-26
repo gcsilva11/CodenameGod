@@ -1,5 +1,5 @@
 local update_time = 0
-local MOVE_AROUND_TIME = 5
+local MOVE_AROUND_TIME = 15
 local shoe_count = 0
 local has_ticket = 0
 local solved_puzzle = false

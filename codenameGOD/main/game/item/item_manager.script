@@ -18,6 +18,10 @@ local function handle_click(url, action_id, action, gameobject)
 	if action_id == hash("click") then
 		if action.pressed then
 			current_item = items[gameobject]
+
+			local go_url = msg.url(current_item.go)
+			local go_label = msg.url(go_url.socket, go_url.path, "label")
+			label.set_text(go_label, current_item.label)
 					
 			if current_item.found == 0 and current_item.name ~="shoe1" and current_item.name ~="shoe2" and current_item.name ~="ticket" then
 				current_item.found = 1 
@@ -30,6 +34,11 @@ local function handle_click(url, action_id, action, gameobject)
 						
 		elseif action.released then
 			if current_item then
+				
+				local go_url = msg.url(current_item.go)
+				local go_label = msg.url(go_url.socket, go_url.path, "label")
+				label.set_text(go_label, "")
+				
 				go.set_position(vmath.vector3(mouse_x, mouse_y, 0), current_item.go)
 
 				msg.post(

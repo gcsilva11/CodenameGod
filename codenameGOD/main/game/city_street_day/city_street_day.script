@@ -111,19 +111,20 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("bully_escape") then
 
 		msg.post("/collections#main", "stop_game")
-		msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WAS THAT???", character = bully2_url})
-
+		event_manager:register_event(1, function(self, id)
+			msg.post("/dialogue#dialogue", "show_text", {text="HEY, WHAT WAS THAT???", character = bully2_url})
+		end)
 		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Who did that bro?", character = bully3_url})
 		end)
-		event_manager:register_event(8, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Dude this is scary, we should, like, leave.", character = bully1_url})
 		end)
-		event_manager:register_event(12, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="You got lucky nerd. We'll see you around.", character = bully1_url})
 		end)
 
-		event_manager:register_event(16, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			local bully1_pos = go.get_position(bully1_url)
 			msg.post(bully1_url, "go_to", {
 				pos=vmath.vector3(1100, bully1_pos.y, bully1_pos.z), 
@@ -142,13 +143,13 @@ function on_message(self, message_id, message, sender)
 				duration=2.5
 			})
 		end)
-		event_manager:register_event(19, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="What the hell --?", character = "randall"})
 		end)
-		event_manager:register_event(23, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="Is someone here with me?", character = "randall"})
 		end)
-		event_manager:register_event(27, function(self, id)
+		event_manager:register_event(4, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {text="FIND OUT ON THE NEXT EPISODE OF CODENAME G.O.D! ", character = "randall"})
 		end)
 		
