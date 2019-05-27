@@ -1,0 +1,12 @@
+images {
+  image: "/assets/images/cursor/cursor1.png"
+}
+images {
+  image: "/assets/images/cursor/cursor2.png"
+}
+images {
+  image: "/assets/images/cursor/cursor3.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

@@ -19,7 +19,7 @@ function on_message(self, message_id, message, sender)
 		if message.character then
 			msg.post(message.character, "start_talking")
 		end
-		timer.delay(message.delay or 3, false, function(self, id)
+		timer.delay(message.delay or 4, false, function(self, id)
 			gui.set_enabled(text, false)
 			local box  = gui.get_node("box")
 			gui.set_enabled(box, false)

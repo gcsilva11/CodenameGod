@@ -156,7 +156,7 @@ function on_message(self, message_id, message, sender)
 				if has_ticket >= 1 then
 					msg.post("/dialogue#dialogue", "show_text", {text = "Boy, I sure wish my shoes \nmagically flew towards me!"})		
 				else
-					msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it."})
+					msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it.", delay=5})
 				end
 			end
 			if gamestate == 3 then

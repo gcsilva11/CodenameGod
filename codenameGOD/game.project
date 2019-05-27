@@ -11,7 +11,7 @@ fullscreen = 0
 
 [project]
 title = Codename G.O.D.
-dependencies = 
+dependencies = https://github.com/subsoap/defos/archive/master.zip
 
 [physics]
 debug = 0

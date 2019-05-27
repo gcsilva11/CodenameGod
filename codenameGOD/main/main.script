@@ -19,6 +19,7 @@ function on_input(self, action_id, action)
 		if action.pressed then
 			--msg.post("/sound#1-mouse_click", "play_sound", {gain = 0.1})
 		end
+
 	end
 end
 

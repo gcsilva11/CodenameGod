@@ -50,7 +50,7 @@ return {
 		scenario = "room",
 		status = "show",
 		found = 0,
-		label = "Left shoe"
+		label = "Right shoe"
 	}
 	-- END OF ROOM ITEMS
 }
