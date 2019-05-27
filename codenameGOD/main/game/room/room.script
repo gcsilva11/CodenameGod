@@ -9,7 +9,7 @@ local arrow_url
 
 local item_strings = {
 	[1] = {
-		text = "My telescope <3 Many nights spent looking\nat girl-I mean...at the stars. Yes.",
+		text = "My telescope <3 Many nights spent looking\nat girl-I mean...at the stars! Yes.",
 		position = {x=210, y=200}
 	},
 	[2] = {
@@ -90,35 +90,44 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("click_tv") then
-		msg.post("/dialogue#dialogue", "show_text", {text="An old CRT TV"})
+		msg.post("/dialogue#dialogue", "show_text", {text="Just your average TV."})
 	end
 
 	if message_id == hash("click_nes") then
-		msg.post("/dialogue#dialogue", "show_text", {text="A classical NES"})
+		msg.post("/dialogue#dialogue", "show_text", {text="It's a Nintendo. \nTop of the line gaming technology!"})
 	end
 
 	if message_id == hash("click_telescope") then
-		msg.post("/dialogue#dialogue", "show_text", {text="This is a telescope"})
+		msg.post("/dialogue#dialogue", "show_text", {text="This is a telescope."})
 	end
 	
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
 			event_manager:register_event(3, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Randall wake up, you're gonna\nbe late for school dude!"})
+				msg.post("/dialogue#dialogue", "show_text", {text="Randall, wake up!! \nYou're gonna be late for school!"})
 			end)
 
 			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="ITS THE WEEKEND SHUT UP", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {text="It's saturday! I'm not falling \nfor that again Travis!", character = "/randall"})
+			end)
+
+			event_manager:register_event(3, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {text="Whatever turd!"})
+			end)
+
+			event_manager:register_event(3, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {text="Sigh...\nHe's such a douche...", character = "/randall"})
+			end)
+
+			event_manager:register_event(2, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {text="Oh no!", character = "/randall"})
 			end)
 
 			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Although...!\nThe Magic The Gathering tournament!", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late for the anual \nSorcery: The congregation anual tournament!", character = "/randall"})
 			end)
 
-			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late!", character = "/randall"})
-			end)
 
 			event_manager:register_event(4, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...\nAnd my ticket!", delay = 5,  character = "/randall"})
@@ -196,7 +205,7 @@ function on_message(self, message_id, message, sender)
 
 		elseif message_id == hash("run_sequence_2") then
 			event_manager:register_event(1, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Alriiiiiiight! Time to get out of here!",delay = 2, character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {text="Alright! Time to bounce out of here!",delay = 2, character = "/randall"})
 			end)
 			event_manager:register_event(4, function(self, id)
 				msg.post(room_url, "acquire_input_focus")
