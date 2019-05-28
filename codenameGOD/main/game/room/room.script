@@ -13,7 +13,7 @@ local item_strings = {
 		position = {x=210, y=200}
 	},
 	[2] = {
-		text = "I don't care what anyone says,\nthe books are much better than the TV Series.\nSuck it Game Of Thrones.",
+		text = "I don't care what anyone says, the books are much\nbetter than the TV Series. Suck it Game Of Thrones.",
 		position = {x=220, y=260}
 	},
 	[3] = {
@@ -105,35 +105,35 @@ function on_message(self, message_id, message, sender)
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
 			event_manager:register_event(3, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Randall, wake up!! \nYou're gonna be late for school!"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Randall, wake up!! \nYou're gonna be late for school!"})
 			end)
 
-			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="It's saturday! I'm not falling \nfor that again Travis!", character = "/randall"})
+			event_manager:register_event(5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="It's saturday! I'm not falling \nfor that again Travis!", character = "/randall"})
 			end)
 
-			event_manager:register_event(3, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Whatever turd!"})
+			event_manager:register_event(5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Whatever turd!"})
 			end)
 
-			event_manager:register_event(3, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Sigh...\nHe's such a douche...", character = "/randall"})
+			event_manager:register_event(2.5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Sigh...\nHe's such a douche...", character = "/randall"})
 			end)
 
-			event_manager:register_event(2, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Oh no!", character = "/randall"})
+			event_manager:register_event(5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=1.5, text="Oh no!", character = "/randall"})
 			end)
 
-			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="I'm gonna be late for the anual \nSorcery: The congregation anual tournament!", character = "/randall"})
+			event_manager:register_event(1.5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="I'm gonna be late for the anual \nSorcery: The congregation anual tournament!", character = "/randall"})
 			end)
 
 
-			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Gotta find my shoes before I leave...\nAnd my ticket!", delay = 5,  character = "/randall"})
+			event_manager:register_event(5, function(self, id)
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Gotta find my shoes before I leave...\nAnd my ticket!", character = "/randall"})
 			end)
 
-			event_manager:register_event(4, function(self, id)
+			event_manager:register_event(5, function(self, id)
 				msg.post(room_url, "run_sequence_1")
 			end)
 		elseif message_id == hash("run_sequence_1") then
@@ -163,9 +163,9 @@ function on_message(self, message_id, message, sender)
 			print("hint time")
 			if gamestate < 3 then
 				if has_ticket >= 1 then
-					msg.post("/dialogue#dialogue", "show_text", {text = "Boy, I sure wish my shoes \nmagically flew towards me!"})		
+					msg.post("/dialogue#dialogue", "show_text", {delay=5, text = "Boy, I sure wish my shoes \nmagically flew towards me!", character = "/randall"})		
 				else
-					msg.post("/dialogue#dialogue", "show_text", {text = "Pretty sure I was using my ticket\n as a bookmark last night...\nI need to find it.", delay=5})
+					msg.post("/dialogue#dialogue", "show_text", {delay=6, text = "Pretty sure I was using my ticket as a\nbookmark last night... I need to find it.", character = "/randall"})
 				end
 			end
 			if gamestate == 3 then
@@ -200,12 +200,12 @@ function on_message(self, message_id, message, sender)
 			msg.post(".", "moved")
 			
 		elseif message_id == hash("ticket_found") and has_ticket == 0 then
-			msg.post("/dialogue#dialogue", "show_text", {text="There's the ticket!", character = "/randall"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="There's the ticket!", character = "/randall"})
 			has_ticket = has_ticket + 1
 
 		elseif message_id == hash("run_sequence_2") then
 			event_manager:register_event(1, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Alright! Time to bounce out of here!",delay = 2, character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="Alright! Time to bounce out of here!", character = "/randall"})
 			end)
 			event_manager:register_event(4, function(self, id)
 				msg.post(room_url, "acquire_input_focus")

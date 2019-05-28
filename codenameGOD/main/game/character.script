@@ -33,14 +33,4 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	--só para testar a troca de animações
-	if action_id == hash("q") then
-		self.new_animation = hash("talking")
-	elseif action_id == hash("w") then
-		self.new_animation = hash("walking")
-	elseif action_id == hash("e") then
-		self.new_animation = hash("special")
-	elseif action_id == hash("r") then
-		self.new_animation = hash("idle")
-	end
 end
