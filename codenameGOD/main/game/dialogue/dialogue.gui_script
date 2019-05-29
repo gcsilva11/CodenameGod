@@ -4,6 +4,7 @@ function init(self)
 	local text  = gui.get_node("text")
 	gui.set_enabled(text, false)
 
+	self.last_sound = nil
 	self.last_message_id = 0
 end
 
@@ -12,19 +13,29 @@ function on_message(self, message_id, message, sender)
 		self.last_message_id = self.last_message_id + 1
 		local current_message_id = self.last_message_id
 		
-		msg.post(".", "acquire_input_focus")
 		local box  = gui.get_node("box")
 		gui.set_enabled(box, true)
 		local text  = gui.get_node("text")
 		gui.set_enabled(text, true)
 
 		gui.set_text(text, message.text)
-
-		print(message.character)
 		
 		if message.character then
 			msg.post(message.character, "start_talking")
 		end
+		if message.sound then
+			msg.post(message.sound, "play_sound")
+
+			local current_sound = self.last_sound
+			timer.delay(0.5, false, function()	
+				if current_sound ~= self.last_sound then
+					msg.post(current_sound, "stop_sound")
+				end
+			end)
+
+			self.last_sound = message.sound
+		end
+		
 		timer.delay(message.delay or 4, false, function(self, id)
 			if current_message_id == self.last_message_id then
 				gui.set_enabled(text, false)

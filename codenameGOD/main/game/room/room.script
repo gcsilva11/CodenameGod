@@ -107,23 +107,23 @@ function on_message(self, message_id, message, sender)
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
 			event_manager:register_event(3, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Randall, wake up!! \nYou're gonna be late for school!"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Randall, wake up!! \nYou're gonna be late for school!", sound="#Bullies_4"})
 			end)
 
 			event_manager:register_event(5, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="It's saturday! I'm not falling \nfor that again Travis!", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="It's saturday! I'm not falling \nfor that again Travis!", character = "/randall", sound="#Randall_1"})
 			end)
 
 			event_manager:register_event(5, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Whatever turd!"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Whatever turd!", sound="#Bullies_2"})
 			end)
 
 			event_manager:register_event(2.5, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Sigh...\nHe's such a douche...", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Sigh...\nHe's such a douche...", character = "/randall", sound="#Randall_short2"})
 			end)
 
 			event_manager:register_event(5, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=1.5, text="Oh no!", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=1.5, text="Oh no!", character = "/randall", sound="#Randall_panic1"})
 			end)
 
 			event_manager:register_event(1.5, function(self, id)
@@ -132,7 +132,7 @@ function on_message(self, message_id, message, sender)
 
 
 			event_manager:register_event(5, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Gotta find my shoes before I leave...\nAnd my ticket!", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Gotta find my shoes before I leave...\nAnd my ticket!", character = "/randall", sound="#Randall_4"})
 			end)
 
 			event_manager:register_event(5, function(self, id)
@@ -158,20 +158,20 @@ function on_message(self, message_id, message, sender)
 					pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
 					duration=2
 				})
-				msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+				msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text, sound="#Randall_3"})
 			end
 			
 		elseif message_id == hash("hint") then
 			print("hint time")
 			if gamestate < 3 then
 				if has_ticket >= 1 then
-					msg.post("/dialogue#dialogue", "show_text", {delay=5, text = "Boy, I sure wish my shoes \nmagically flew towards me!", character = "/randall"})		
+					msg.post("/dialogue#dialogue", "show_text", {delay=5, text = "Boy, I sure wish my shoes \nmagically flew towards me!", character = "/randall", sound="#Randall_4"})		
 				else
-					msg.post("/dialogue#dialogue", "show_text", {delay=6, text = "Pretty sure I was using my ticket as a\nbookmark last night... I need to find it.", character = "/randall"})
+					msg.post("/dialogue#dialogue", "show_text", {delay=6, text = "Pretty sure I was using my ticket as a\nbookmark last night... I need to find it.", character = "/randall", sound="#Randall_3"})
 				end
 			end
 			if gamestate == 3 then
-				msg.post("/dialogue#dialogue", "show_text", {text = "I really need to go now\n I'm gonna be late!"})
+				msg.post("/dialogue#dialogue", "show_text", {text = "I really need to go now.\n I'm gonna be late!", character = "/randall", sound="#Randall_1"})
 			end
 			msg.post(".", "moved")
 				
@@ -181,33 +181,34 @@ function on_message(self, message_id, message, sender)
 				shoe_count = shoe_count + 1
 				msg.post("/item_manager#item_manager", "destroy_item",{text = message.item_name})
 				if shoe_count == 1 then
-					msg.post("/dialogue#dialogue", "show_text", {text="That's one shoe!", character = "/randall"})
+					msg.post("/dialogue#dialogue", "show_text", {text="That's one shoe!", character = "/randall", sound="#Randall_short1"})
 				end
 				if shoe_count == 2 then
-					msg.post("/dialogue#dialogue", "show_text", {text="Aaaand ready to go!", character = "/randall"})
+					msg.post("/dialogue#dialogue", "show_text", {text="Aaaand ready to go!", character = "/randall", sound="#Randall_short2"})
 				end
 			end
 			msg.post(".", "moved")
 
 		elseif message_id == hash("find_shoes") then
 			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Ok, gotta find my shoes now...", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {text="Ok, gotta find my shoes now...", character = "/randall", sound="#Randall_6"})
 			end)
 			msg.post(".", "moved")
 
 		elseif message_id == hash("find_ticket") then
 			event_manager:register_event(4, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {text="Now, the ticket has to be somewhere...", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {text="Now, the ticket has to be somewhere...", character = "/randall", sound="#Randall_6"})
 			end)
 			msg.post(".", "moved")
 			
 		elseif message_id == hash("ticket_found") and has_ticket == 0 then
-			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="All safe for later!", character = "/randall"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="All safe for later!", character = "/randall", sound="#Randall_4"})
+
 			has_ticket = has_ticket + 1
 
 		elseif message_id == hash("run_sequence_2") then
 			event_manager:register_event(1, function(self, id)
-				msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="Alright! Time to bounce out of here!", character = "/randall"})
+				msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="Alright! Time to bounce out of here!", character = "/randall", sound="#Randall_1"})
 			end)
 			event_manager:register_event(4, function(self, id)
 				msg.post(room_url, "acquire_input_focus")

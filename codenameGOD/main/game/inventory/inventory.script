@@ -4,8 +4,13 @@ local items_start_pos = vmath.vector3(310,46,0.6)
 local items_space = 60
 
 function reorder_items(items)
+	local items_current_pos = items_start_pos
+	if not is_open then
+		items_current_pos.y = -40
+	end
+	
 	for i, item in ipairs(items) do
-		local pos = items_start_pos + vmath.vector3(items_space*(i-1), 0, 0)
+		local pos = items_current_pos + vmath.vector3(items_space*(i-1), 0, 0)
 		go.set_position(pos, item)
 	end
 end
@@ -82,9 +87,7 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("remove_item") then
 		remove_item(self.items, message.url)
-		if is_open then
-			reorder_items(self.items)
-		end
+		reorder_items(self.items)
 	end
 
 	if message_id == hash("item_drag") then

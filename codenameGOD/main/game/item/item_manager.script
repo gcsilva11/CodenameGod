@@ -28,7 +28,7 @@ local function handle_click(url, action_id, action, gameobject)
 					msg.post(
 					"/dialogue#dialogue",
 					"show_text",
-					{text=current_item.text, delay=4, character="/randall"}
+					{text=current_item.text, delay=4, character="/randall", sound="#Randall_2"}
 				)
 			end
 						
@@ -141,7 +141,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("inventory_opened") then
 		for name, item in pairs(items) do
 			if item.in_inventory then
-				go.animate(item.go, "position.y", go.PLAYBACK_ONCE_FORWARD, 40, go.EASING_LINEAR, 0.3)
+				go.animate(item.go, "position.y", go.PLAYBACK_ONCE_FORWARD, 46, go.EASING_LINEAR, 0.3)
 			end
 		end
 	end
@@ -166,6 +166,7 @@ function on_message(self, message_id, message, sender)
 			item.status = "hide"
 			item.scenario = "none"
 			update_visible_items(self)
+			
 
 			if item.in_inventory then
 				item.in_inventory = false

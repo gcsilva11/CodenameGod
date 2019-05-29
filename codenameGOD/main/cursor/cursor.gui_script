@@ -22,7 +22,7 @@ function on_input(self, action_id, action)
 		end
 	end
 
-	gui.set_position(self.node, vmath.vector3(action.x, action.y, 1))
+	gui.set_position(self.node, vmath.vector3(action.x+12, action.y-7, 1))
 end
 
 function on_message(self, message_id, message, sender)

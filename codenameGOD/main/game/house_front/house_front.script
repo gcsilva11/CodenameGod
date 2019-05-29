@@ -45,12 +45,12 @@ function on_message(self, message_id, message, sender)
 			pos=vmath.vector3(item_strings[r].position.x, item_strings[r].position.y, 0.2), 
 			duration=2
 		})
-		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text})
+		msg.post("/dialogue#dialogue", "show_text", {text=item_strings[r].text, character = "randall", sound="#Randall_6"})
 	end
 
 	if message_id == hash("hint") then
 		if gamestate == 3 then
-			msg.post("/dialogue#dialogue", "show_text", {text = "I REALLY need to get going\nor I'm gonna be late!"})			
+			msg.post("/dialogue#dialogue", "show_text", {text = "I REALLY need to get going\nor I'm gonna be late!", character = "randall", sound="#Randall_1"})			
 		end
 		msg.post(".", "moved")
 	end
