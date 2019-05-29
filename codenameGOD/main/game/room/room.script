@@ -140,8 +140,6 @@ function on_message(self, message_id, message, sender)
 				msg.post(room_url, "run_sequence_1")
 			end)
 		elseif message_id == hash("run_sequence_1") then
-			local pos = vmath.vector3(0,-20,0)
-			local rot = vmath.quat_rotation_z(90)
 			go.animate("/randall", "rotation.z", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 1)
 			go.animate("/randall", "position.y", go.PLAYBACK_ONCE_FORWARD, 300, go.EASING_LINEAR, 1)
 			go.animate("/randall", "position.x", go.PLAYBACK_ONCE_FORWARD, 520, go.EASING_LINEAR, 1)
