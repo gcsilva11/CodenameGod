@@ -106,6 +106,7 @@ function on_message(self, message_id, message, sender)
 	if gamestate < 2 then
 		if message_id == hash("run_sequence_0") then
 			msg.post("/collections#main", "stop_game")
+			msg.post("/cutscene#cutscene", "cutscene_start")
 			event_manager:register_event(3, function(self, id)
 				msg.post("/dialogue#dialogue", "show_text", {delay=5, text="Randall, wake up!! \nYou're gonna be late for school!", sound="#Bullies_4"})
 			end)
@@ -148,6 +149,7 @@ function on_message(self, message_id, message, sender)
 			event_manager:register_event(3, function(self, id)
 				msg.post(room_url, "acquire_input_focus")
 				msg.post("/collections#main", "restart_game")
+				msg.post("/cutscene#cutscene", "cutscene_end")
 			end)
 			gamestate = 1 
 		elseif message_id == hash("idle") then

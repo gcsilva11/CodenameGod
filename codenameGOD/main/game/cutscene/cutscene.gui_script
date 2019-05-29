@@ -1,0 +1,16 @@
+function on_message(self, message_id, message, sender)
+	local above_box = gui.get_node("above_box")
+	local below_box = gui.get_node("below_box")
+	
+	if message_id == hash("cutscene_start") then
+		gui.animate(above_box, gui.PROP_POSITION, vmath.vector4(525, 580, 0, 0),gui.EASING_LINEAR, 0.5)
+		gui.animate(below_box, gui.PROP_POSITION, vmath.vector4(525, 0, 0, 0),gui.EASING_LINEAR, 0.5)
+
+	
+	elseif message_id == hash("cutscene_end") then
+		gui.animate(above_box, gui.PROP_POSITION, vmath.vector4(525, 627, 0, 0),gui.EASING_LINEAR, 1)
+		gui.animate(below_box, gui.PROP_POSITION, vmath.vector4(519, -49, 0, 0),gui.EASING_LINEAR, 1)
+		
+	end
+
+end
