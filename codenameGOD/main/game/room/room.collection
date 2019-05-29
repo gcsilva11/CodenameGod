@@ -69,8 +69,8 @@ instances {
   id: "arrow"
   prototype: "/main/game/arrow.go"
   position {
-    x: 60.0
-    y: 288.0
+    x: 967.0
+    y: 407.0
     z: 0.0
   }
   rotation {
@@ -88,8 +88,8 @@ instances {
     }
   }
   scale3 {
-    x: 0.4
-    y: 0.4
+    x: 0.7
+    y: 1.1
     z: 1.0
   }
 }

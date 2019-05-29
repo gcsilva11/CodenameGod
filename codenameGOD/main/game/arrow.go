@@ -19,7 +19,7 @@ embedded_components {
   data: "tile_set: \"/assets/items.atlas\"\n"
   "default_animation: \"arrow_placehold\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
+  "blend_mode: BLEND_MODE_ADD\n"
   ""
   position {
     x: 0.0
