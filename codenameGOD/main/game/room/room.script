@@ -6,6 +6,7 @@ local solved_puzzle = false
 local inside_gameobject = require "main.inside_gameobject"
 local room_url
 local arrow_url
+local inv_arrow_url
 
 local item_strings = {
 	[1] = {
@@ -68,7 +69,8 @@ function init(self)
 	else
 		msg.post(".", "moved")
 	end
-
+	inv_arrow_url = msg.url("inventory_arrow")
+	msg.post(inv_arrow_url, "disable")
 	msg.post("sound#ambiance", "play_sound")
 	room_url = msg.url()
 	arrow_url = msg.url("arrow")
@@ -200,7 +202,7 @@ function on_message(self, message_id, message, sender)
 			msg.post(".", "moved")
 			
 		elseif message_id == hash("ticket_found") and has_ticket == 0 then
-			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="There's the ticket!", character = "/randall"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="All safe for later!", character = "/randall"})
 			has_ticket = has_ticket + 1
 
 		elseif message_id == hash("run_sequence_2") then
@@ -223,6 +225,27 @@ function on_message(self, message_id, message, sender)
 			go.animate("books", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(252,212,0.1), go.EASING_LINEAR, 0.4)
 			go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4, 0, function(self, url, property)
 				msg.post("sound#7-books_falling", "play_sound")
+				msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="There's the ticket! \nNow, where to put it...", character = "/randall"})
+				timer.delay(2, false, function(self, id)
+					msg.post(inv_arrow_url, "enable")
+				end)
+				timer.delay(2.5, false, function(self, id)
+					msg.post(inv_arrow_url, "disable")
+				end)
+				timer.delay(2.8, false, function(self, id)
+					msg.post(inv_arrow_url, "enable")
+				end)
+				timer.delay(3.3, false, function(self, id)
+					msg.post(inv_arrow_url, "disable")
+				end)
+				timer.delay(3.6, false, function(self, id)
+					msg.post(inv_arrow_url, "enable")
+				end)
+				timer.delay(4, false, function(self, id)
+					msg.post("/dialogue#dialogue", "show_text", {delay = 2, text="Oh.", character = "/randall"})
+					msg.post(inv_arrow_url, "disable")
+				end)
+
 			end)
 		end
 	end
