@@ -16,7 +16,7 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/assets/images/hit_box.atlas\"\n"
+  data: "tile_set: \"/assets/hit_box.atlas\"\n"
   "default_animation: \"hit_box\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
