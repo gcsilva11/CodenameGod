@@ -45,6 +45,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("stop_game") or message_id == hash("restart_game") then
 		msg.post("/item_manager", message_id)
 		msg.post("/clickable_area_manager", message_id)
+		msg.post("/cursor", message_id)
 		if message_id == hash("stop_game") then
 			self.is_game_stopped = true
 		else

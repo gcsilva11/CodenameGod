@@ -23,10 +23,13 @@ images {
   image: "/assets/images/items/items8.png"
 }
 images {
-  image: "/assets/images/items/arrow_placehold.png"
+  image: "/assets/images/arrow_inventory.png"
 }
 images {
-  image: "/assets/images/arrow_inventory.png"
+  image: "/assets/images/skip_dialogue.png"
+}
+images {
+  image: "/assets/images/items/arrow_placehold.png"
 }
 margin: 0
 extrude_borders: 0

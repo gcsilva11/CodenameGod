@@ -44,30 +44,31 @@ function on_message(self, message_id, message, sender)
 		msg.post("sound#Bullies_Theme_intro", "play_sound",{delay = 2,  gain = 0.1})
 		msg.post("sound#Bullies_Theme_verse", "play_sound",{delay = 11.3, gain = 0.1})
 		event_manager:register_event(1.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="Well looky what we have here.", character = bully1_url, sound="#Bullies_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="Well looky what we have here.", character = bully1_url, sound="#Bullies_4", skip=true})
 		end)
 		event_manager:register_event(3.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="Mr. Smarty Pants himself!", character = bully2_url, sound="#Bullies_5"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="Mr. Smarty Pants himself!", character = bully2_url, sound="#Bullies_5", skip=true})
 		end)
 		event_manager:register_event(3, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="Hehehehe!", character = bully3_url, sound="#Bullies_3"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="Hehehehe!", character = bully3_url, sound="#Bullies_3", skip=true})
 			msg.post("/dialogue#Bullies_2", "play_sound")
 			msg.post("/dialogue#Bullies_1", "play_sound")
 		end)
-		event_manager:register_event(3.5, function(self, id)
-			local bully1_pos = go.get_position(bully1_url)
+
+		local bully1_pos = go.get_position(bully1_url)
+		local bully2_pos = go.get_position(bully2_url)		
+		local bully3_pos = go.get_position(bully3_url)
+		event_manager:register_event(3.5, function(self, id)	
 			msg.post(bully1_url, "go_to", {
 				pos=vmath.vector3(270, bully1_pos.y, bully1_pos.z), 
 				duration=1
 			})
 
-			local bully2_pos = go.get_position(bully2_url)
 			msg.post(bully2_url, "go_to", {
 				pos=vmath.vector3(300, bully2_pos.y, bully2_pos.z), 
 				duration=1
 			})
 
-			local bully3_pos = go.get_position(bully3_url)
 			msg.post(bully3_url, "go_to", {
 				pos=vmath.vector3(250, bully3_pos.y, bully3_pos.z), 
 				duration=1
@@ -78,13 +79,13 @@ function on_message(self, message_id, message, sender)
 			end)
 		end)
 		event_manager:register_event(2, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="What do you have there DWEEB!", character = bully3_url, sound="#Bullies_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="What do you have there DWEEB!", character = bully3_url, sound="#Bullies_4", skip=true})
 		end)
 		event_manager:register_event(3.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Aw g-guys, c'mon!!", character = "randall", sound="#Randall_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Aw g-guys, c'mon!!", character = "randall", sound="#Randall_4", skip=true})
 		end)
 		event_manager:register_event(2.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="What is this? \nA ticket for some nerd fest?", character = bully3_url, sound="#Bullies_5"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="What is this? \nA ticket for some nerd fest?", character = bully3_url, sound="#Bullies_5", skip=true})
 			timer.delay(2, false, function(self, id)
 				msg.post("/dialogue#Bullies_2", "play_sound")
 				msg.post("/dialogue#Bullies_3", "play_sound")
@@ -92,15 +93,15 @@ function on_message(self, message_id, message, sender)
 		end)
 
 		event_manager:register_event(4, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=2, text="Please no!!", character = "randall", sound="#Randall_panic1"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=2, text="Please no!!", character = "randall", sound="#Randall_panic1", skip=true})
 		end)
 			
 		event_manager:register_event(2, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=4,text="Heh, guess it won't see \nthe light of day now.", character = bully1_url, sound="#Bullies_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=4,text="Heh, guess it won't see \nthe light of day now.", character = bully1_url, sound="#Bullies_4", skip=true})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "ticket"})
 		end)
 		event_manager:register_event(4, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Hey, check if he has money on him!", character = bully1_url, sound="#Bullies_5"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Hey, check if he has money on him!", character = bully1_url, sound="#Bullies_5", skip=true})
 			msg.post("/item_manager#item_manager", "destroy_item",{text = "coins"})
 			timer.delay(2, false, function(self, id)
 				msg.post("/dialogue#Bullies_3", "play_sound")
@@ -135,42 +136,42 @@ function on_message(self, message_id, message, sender)
 		msg.post("/cutscene#cutscene", "cutscene_start")
 		msg.post("sound#Bullies_Theme_verse", "stop_sound")
 		event_manager:register_event(1, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="HEY, WHAT WAS THAT???", character = bully2_url, sound="#Bullies_5"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=3, text="HEY, WHAT WAS THAT???", character = bully2_url, sound="#Bullies_5", skip=true})
 		end)
 		event_manager:register_event(3, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Who did that bro?", character = bully3_url, sound="#Bullies_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Who did that bro?", character = bully3_url, sound="#Bullies_4", skip=true})
 		end)
 		event_manager:register_event(2.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Dude this is scary, we should, like, leave.", character = bully1_url, sound="#Bullies_5"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="Dude this is scary, we should, like, leave.", character = bully1_url, sound="#Bullies_5", skip=true})
 		end)
 		event_manager:register_event(4, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="You got lucky nerd. We'll see you around.", character = bully1_url, sound="#Bullies_4"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=4, text="You got lucky nerd. We'll see you around.", character = bully1_url, sound="#Bullies_4", skip=true})
 		end)
 
-		event_manager:register_event(4, function(self, id)
-			local bully1_pos = go.get_position(bully1_url)
+		local bully1_pos = go.get_position(bully1_url)
+		local bully2_pos = go.get_position(bully2_url)
+		local bully3_pos = go.get_position(bully3_url)
+		event_manager:register_event(4, function(self, id)			
 			msg.post(bully1_url, "go_to", {
 				pos=vmath.vector3(1100, bully1_pos.y, bully1_pos.z), 
 				duration=2.5
 			})
 
-			local bully2_pos = go.get_position(bully2_url)
 			msg.post(bully2_url, "go_to", {
 				pos=vmath.vector3(1100, bully2_pos.y, bully2_pos.z), 
 				duration=2.5
 			})
 
-			local bully3_pos = go.get_position(bully3_url)
 			msg.post(bully3_url, "go_to", {
 				pos=vmath.vector3(1100, bully3_pos.y, bully3_pos.z), 
 				duration=2.5
 			})
 		end)
 		event_manager:register_event(3.5, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="What the hell --?", character = "randall", sound="#Randall_1"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="What the hell --?", character = "randall", sound="#Randall_1", skip=true})
 		end)
 		event_manager:register_event(3, function(self, id)
-			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Is someone here with me?", character = "randall", sound="#Randall_2"})
+			msg.post("/dialogue#dialogue", "show_text", {delay=2.5, text="Is someone here with me?", character = "randall", sound="#Randall_2", skip=true})
 		end)
 		event_manager:register_event(2.5, function(self, id)
 			msg.post("/dialogue#dialogue", "show_text", {delay=5, text="FIND OUT ON THE NEXT EPISODE OF CODENAME G.O.D! ", character = "randall", sound="#Randall_4"})
