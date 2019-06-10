@@ -7,6 +7,8 @@ local inside_gameobject = require "main.inside_gameobject"
 local room_url
 local arrow_url
 local inv_arrow_url
+local door_hint_timer = 0
+local DOOR_HINT_DELAY = 4
 
 local item_strings = {
 	[1] = {
@@ -41,6 +43,7 @@ local item_strings = {
 
 function update(self, dt)
 	update_time = update_time + dt
+	door_hint_timer = door_hint_timer + dt
 	
 	if update_time >= MOVE_AROUND_TIME then
 		update_time = 0
@@ -214,7 +217,7 @@ function on_message(self, message_id, message, sender)
 		msg.post(".", "moved")
 		
 	elseif message_id == hash("ticket_found") and has_ticket == 0 then
-		msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="All safe for later!", character = "/randall", sound="#Randall_4"})
+		msg.post("/dialogue#dialogue", "show_text", {delay=3.5, text="All safe for later!", character = "/randall", sound="#Randall_5"})
 
 		has_ticket = has_ticket + 1
 
@@ -238,7 +241,7 @@ function on_message(self, message_id, message, sender)
 		go.animate("books", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(252,212,0.1), go.EASING_LINEAR, 0.4)
 		go.animate("books", "rotation", go.PLAYBACK_ONCE_FORWARD, vmath.quat_rotation_z(math.rad(-90)), go.EASING_LINEAR, 0.4, 0, function(self, url, property)
 			msg.post("sound#7-books_falling", "play_sound")
-			msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="There's the ticket! \nNow, where to put it...", character = "/randall"})
+			msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="There's the ticket! \nNow, where to put it...", character = "/randall", sound="#Randall_4"})
 			timer.delay(2, false, function(self, id)
 				msg.post(inv_arrow_url, "enable")
 			end)
@@ -260,5 +263,18 @@ function on_message(self, message_id, message, sender)
 			end)
 
 		end)
+	end
+
+	if message_id == hash("cant_leave") then
+		if door_hint_timer > DOOR_HINT_DELAY then
+			if gamestate > 0 and gamestate < 3 then
+				if has_ticket >= 1 then
+					msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="I need to put on my shoes before I leave...", character = "/randall", sound="#Randall_3"})
+				else
+					msg.post("/dialogue#dialogue", "show_text", {delay = 4, text="I have to find my ticket before I leave!", character = "/randall", sound="#Randall_1"})
+				end
+				door_hint_timer = 0
+			end
+		end
 	end
 end
