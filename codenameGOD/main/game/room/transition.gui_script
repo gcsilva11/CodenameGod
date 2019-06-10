@@ -1,0 +1,8 @@
+function on_message(self, message_id, message, sender)
+	if message_id == hash("play_transition") then
+		gui.animate(gui.get_node("transition"), "color", vmath.vector4(0, 0, 0, 1), gui.EASING_LINEAR, 1)
+		timer.delay(1.5, false, function()
+			gui.animate(gui.get_node("transition"), "color", vmath.vector4(0, 0, 0, 0), gui.EASING_LINEAR, 1)
+		end)
+	end
+end

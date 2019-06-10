@@ -141,6 +141,63 @@ animations {
   flip_horizontal: 0
   flip_vertical: 0
 }
+animations {
+  id: "bed_sleeping"
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep1.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep2.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep3.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep4.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "bed_awake"
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep5.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep6.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep7.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep8.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "bed_talking"
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep10.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep11.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep12.png"
+  }
+  images {
+    image: "/assets/images/characters/randall_sleep/randall_sleep9.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+  flip_horizontal: 0
+  flip_vertical: 0
+}
 margin: 0
 extrude_borders: 0
 inner_padding: 0
