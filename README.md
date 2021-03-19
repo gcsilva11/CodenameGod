@@ -1,2 +1,2 @@
-# codenameGOD
-the coolest game ever
+# codenameGOD_prototype
+the coolest game ever....to be prototyped
